@@ -5,6 +5,7 @@ import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowUpRight, Check, Tag } from "lucide-react";
 import { INVENTORY } from "@/data/inventory";
+import InventoryGallery from "./InventoryGallery";
 
 export default function VehicleShowcase({ onOpenReserve }) {
   const [activeModel, setActiveModel] = useState(INVENTORY[0]);
@@ -173,6 +174,9 @@ export default function VehicleShowcase({ onOpenReserve }) {
             </div>
           </motion.div>
         </AnimatePresence>
+
+        {/* Complete Showroom Inventory & Categorized Sales Fleet */}
+        <InventoryGallery onSelectVehicle={onOpenReserve} />
       </div>
     </section>
   );

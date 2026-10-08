@@ -13,20 +13,28 @@ import PreorderModal from "@/components/PreorderModal";
 
 export default function HomePage() {
   const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
+  const [selectedVehicle, setSelectedVehicle] = useState(null);
+
+  const handleOpenReserve = (vehicle = null) => {
+    if (vehicle) {
+      setSelectedVehicle(typeof vehicle === "object" ? vehicle.id : vehicle);
+    }
+    setIsReserveModalOpen(true);
+  };
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#060709] text-neutral-900 dark:text-white transition-colors duration-300">
       {/* Navigation */}
-      <Navbar onOpenReserve={() => setIsReserveModalOpen(true)} />
+      <Navbar onOpenReserve={() => handleOpenReserve()} />
 
       {/* Luxury Showroom Hero */}
-      <HeroSection onOpenReserve={() => setIsReserveModalOpen(true)} />
+      <HeroSection onOpenReserve={() => handleOpenReserve()} />
 
       {/* Client Guarantees & White-Glove Logistics Strip */}
       <TelemetryStrip />
 
       {/* Featured Luxury Car Inventory */}
-      <VehicleShowcase onOpenReserve={() => setIsReserveModalOpen(true)} />
+      <VehicleShowcase onOpenReserve={handleOpenReserve} />
 
       {/* Dynamic Driving Calibration */}
       <InteractiveDriveMode />
@@ -38,11 +46,12 @@ export default function HomePage() {
       <ReviewsSection />
 
       {/* Footer */}
-      <Footer onOpenReserve={() => setIsReserveModalOpen(true)} />
+      <Footer onOpenReserve={() => handleOpenReserve()} />
 
       {/* Luxury Acquisition Modal */}
       <PreorderModal
         isOpen={isReserveModalOpen}
+        initialModel={selectedVehicle}
         onClose={() => setIsReserveModalOpen(false)}
       />
     </div>
