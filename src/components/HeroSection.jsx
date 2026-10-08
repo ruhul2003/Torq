@@ -21,7 +21,7 @@ export default function HeroSection({ onOpenReserve }) {
           >
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-neutral-600 dark:text-neutral-300">
-              TORQ MOTORS // EXCLUSIVE LUXURY FLEET
+              TORQ MOTORS // LUXURY FLEET
             </span>
           </motion.div>
 
@@ -44,9 +44,9 @@ export default function HeroSection({ onOpenReserve }) {
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-base sm:text-lg text-neutral-600 dark:text-neutral-300 max-w-xl mx-auto font-normal leading-relaxed mb-8"
+            className="text-base sm:text-lg text-neutral-600 dark:text-neutral-300 max-w-lg mx-auto font-normal leading-relaxed mb-8"
           >
-            Handcrafted electric hypercars and exotic grand tourers. Private showroom viewings, bespoke allocations, and worldwide enclosed delivery.
+            Handcrafted electric hypercars and exotic grand tourers. Immediate private allocations with white-glove delivery worldwide.
           </motion.p>
 
           {/* Primary Action Buttons */}
@@ -111,34 +111,34 @@ export default function HeroSection({ onOpenReserve }) {
             <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-neutral-200/60 dark:border-white/5 text-center">
               <div>
                 <span className="text-[10px] font-mono uppercase text-neutral-400 block mb-0.5">
-                  SHOWROOM INVENTORY
+                  AVAILABLE FLEET
                 </span>
                 <span className="text-xl sm:text-2xl font-display font-bold text-neutral-950 dark:text-white">
-                  14 Units In Stock
+                  9 Luxury Models
                 </span>
               </div>
               <div>
                 <span className="text-[10px] font-mono uppercase text-neutral-400 block mb-0.5">
-                  DELIVERY TIMELINE
+                  DISPATCH
                 </span>
                 <span className="text-xl sm:text-2xl font-display font-bold text-emerald-600 dark:text-emerald-400">
-                  48–72 Hours
+                  48h Enclosed
                 </span>
               </div>
               <div>
                 <span className="text-[10px] font-mono uppercase text-neutral-400 block mb-0.5">
-                  STARTING PRICE
+                  STARTING AT
                 </span>
                 <span className="text-xl sm:text-2xl font-display font-bold text-neutral-950 dark:text-white">
-                  $145,000
+                  $165,000
                 </span>
               </div>
               <div>
                 <span className="text-[10px] font-mono uppercase text-neutral-400 block mb-0.5">
-                  TRANSACTION GUARANTEE
+                  ESCROW
                 </span>
                 <span className="text-xl sm:text-2xl font-display font-bold text-sky-600 dark:text-sky-400">
-                  100% Escrow
+                  100% Protected
                 </span>
               </div>
             </div>
