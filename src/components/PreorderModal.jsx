@@ -1,10 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { X, CheckCircle2, ShieldCheck, ArrowRight, CreditCard, Calendar } from "lucide-react";
+import { INVENTORY } from "@/data/inventory";
 
-export default function PreorderModal({ isOpen, onClose }) {
+export default function PreorderModal({ isOpen, initialModel, onClose }) {
   const [selectedModel, setSelectedModel] = useState("apex-gt");
   const [purchaseType, setPurchaseType] = useState("deposit"); // 'deposit' or 'consult'
   const [formData, setFormData] = useState({
@@ -16,6 +17,12 @@ export default function PreorderModal({ isOpen, onClose }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [isSuccess, setIsSuccess] = useState(false);
   const [orderCode, setOrderCode] = useState("");
+
+  useEffect(() => {
+    if (initialModel) {
+      setSelectedModel(initialModel);
+    }
+  }, [initialModel, isOpen]);
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -107,26 +114,21 @@ export default function PreorderModal({ isOpen, onClose }) {
                 {/* Vehicle Selection */}
                 <div>
                   <label className="text-[11px] font-mono uppercase text-neutral-500 block mb-1.5">
-                    SELECT VEHICLE
+                    SELECT VEHICLE ({INVENTORY.length} FLEET MODELS)
                   </label>
-                  <div className="grid grid-cols-2 gap-2">
-                    {[
-                      { id: "apex-gt", name: "Apex Hyper GT", price: "$245,000" },
-                      { id: "stratos-gt", name: "Stratos Coupé", price: "$185,000" },
-                      { id: "phantom-nero", name: "Phantom Nero", price: "$320,000" },
-                      { id: "monolith", name: "Monolith SUV", price: "$165,000" },
-                    ].map((model) => (
+                  <div className="grid grid-cols-2 sm:grid-cols-3 gap-2 max-h-48 overflow-y-auto pr-1">
+                    {INVENTORY.map((model) => (
                       <button
                         key={model.id}
                         type="button"
                         onClick={() => setSelectedModel(model.id)}
-                        className={`p-2.5 rounded-xl border text-left transition-all ${
+                        className={`p-2 rounded-xl border text-left transition-all ${
                           selectedModel === model.id
                             ? "border-sky-500 bg-sky-500/10 text-neutral-950 dark:text-white font-bold"
                             : "border-neutral-200 dark:border-white/10 text-neutral-600 dark:text-neutral-400"
                         }`}
                       >
-                        <span className="block text-xs font-semibold">{model.name}</span>
+                        <span className="block text-xs font-semibold truncate">{model.name.replace("TORQ ", "")}</span>
                         <span className="text-[10px] text-neutral-400">{model.price}</span>
                       </button>
                     ))}
