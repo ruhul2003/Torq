@@ -6,23 +6,23 @@ import { Quote, Star } from "lucide-react";
 const REVIEWS = [
   {
     quote:
-      "TORQ rewrites what mechanical intimacy feels like in the electric epoch. The 4-wheel independent torque vectoring makes the Apex GT turn into high-speed hairpins as though physics were merely advisory.",
+      "TORQ rewrites mechanical intimacy in the electric era. The torque vectoring rotates into hairpins as if physics were merely advisory.",
     author: "Elena Rostova",
-    role: "Chief Test Driver, Nürburgring Nordschleife",
+    role: "Nürburgring Test Driver",
     outlet: "Apex Dynamics",
   },
   {
     quote:
-      "A triumph of minimalist restraint. No hyper-gimmicky touchscreens or cartoonish animations—just razor-sharp telemetry, solid-state endurance, and 1,450 pure unadulterated horsepower.",
+      "A triumph of minimalist restraint. Razor-sharp telemetry, solid-state endurance, and 1,450 pure unadulterated horsepower.",
     author: "Marcus Vance",
-    role: "Senior Engineering Editor",
-    outlet: "EV Velocity Journal",
+    role: "Engineering Editor",
+    outlet: "EV Velocity",
   },
   {
     quote:
-      "The 920V Silicon-Carbide powertrain charges 10% to 80% in 11 minutes flat. It is the first electric platform that genuinely renders highway range anxiety obsolete.",
+      "Charges 10% to 80% in 11 minutes flat. The first electric hypercar platform that makes range anxiety completely obsolete.",
     author: "Julian Chen",
-    role: "Aerospace Propulsion Analyst",
+    role: "Propulsion Analyst",
     outlet: "Kinetic Review",
   },
 ];
@@ -32,11 +32,11 @@ export default function ReviewsSection() {
     <section className="py-24 relative overflow-hidden bg-neutral-50/70 dark:bg-[#07090D] border-t border-neutral-200/60 dark:border-white/5">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-16">
-          <span className="text-xs font-mono uppercase tracking-widest text-sky-500 block mb-3">
-            VERIFIED TRACK TELEMETRY & APPRAISAL
+          <span className="text-xs font-mono uppercase tracking-widest text-sky-500 font-semibold block mb-2">
+            EXPERT APPRAISAL
           </span>
           <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-950 dark:text-white tracking-tight">
-            Endorsed by Velocity Experts.
+            Verified Velocity.
           </h2>
         </div>
 
