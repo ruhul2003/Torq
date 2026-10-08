@@ -24,6 +24,8 @@ export default function PreorderModal({ isOpen, initialModel, onClose }) {
     }
   }, [initialModel, isOpen]);
 
+  const activeVehicleData = INVENTORY.find((c) => c.id === selectedModel) || INVENTORY[0];
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsSubmitting(true);
@@ -134,6 +136,18 @@ export default function PreorderModal({ isOpen, initialModel, onClose }) {
                     ))}
                   </div>
                 </div>
+
+                {/* Active Vehicle Confirmation Pill */}
+                {activeVehicleData && (
+                  <div className="flex items-center justify-between px-3 py-2 rounded-xl bg-neutral-100/80 dark:bg-white/[0.04] border border-neutral-200/60 dark:border-white/5 text-xs">
+                    <span className="font-semibold text-neutral-900 dark:text-white">
+                      {activeVehicleData.name}
+                    </span>
+                    <span className="font-mono font-bold text-sky-500">
+                      {activeVehicleData.price}
+                    </span>
+                  </div>
+                )}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                   <div>
