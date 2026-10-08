@@ -94,22 +94,22 @@ const MODELS = [
 
 const PAINTS = [
   { id: "obsidian", name: "Obsidian Black", hex: "#0b0c10", price: 0 },
-  { id: "ceramic", name: "Ceramic Pure White", hex: "#f8fafc", price: 0 },
-  { id: "silver", name: "Liquid Kinetic Silver", hex: "#94a3b8", price: 3500 },
-  { id: "cyan", name: "Apex Hyper Cyan", hex: "#38bdf8", price: 4800 },
-  { id: "graphite", name: "Matte Stealth Graphite", hex: "#334155", price: 4200 },
+  { id: "ceramic", name: "Ceramic White", hex: "#f8fafc", price: 0 },
+  { id: "silver", name: "Kinetic Silver", hex: "#94a3b8", price: 3500 },
+  { id: "cyan", name: "Hyper Cyan", hex: "#38bdf8", price: 4800 },
+  { id: "graphite", name: "Stealth Graphite", hex: "#334155", price: 4200 },
 ];
 
 const WHEELS = [
-  { id: "20-aero", name: '20" Forged AeroDisc (Standard)', price: 0 },
-  { id: "21-turbofan", name: '21" Directional Turbofan Alloy', price: 5500 },
-  { id: "22-carbon", name: '22" Exposed Carbon Fiber Matrix', price: 9500 },
+  { id: "20-aero", name: '20" AeroDisc', price: 0 },
+  { id: "21-turbofan", name: '21" Turbofan Alloy', price: 5500 },
+  { id: "22-carbon", name: '22" Carbon Matrix', price: 9500 },
 ];
 
 const INTERIORS = [
-  { id: "titanium", name: "Blackened Titanium & Alcantara", price: 0 },
-  { id: "nordic-white", name: "Nordic Ceramic White Vegan Leather", price: 4200 },
-  { id: "saddle-tan", name: "Cognac Full-Grain Aniline Leather", price: 5500 },
+  { id: "titanium", name: "Titanium & Alcantara", price: 0 },
+  { id: "nordic-white", name: "Ceramic White Hide", price: 4200 },
+  { id: "saddle-tan", name: "Cognac Aniline Leather", price: 5500 },
 ];
 
 export default function ConfiguratorPage() {
@@ -142,10 +142,10 @@ export default function ConfiguratorPage() {
 
         <div className="mb-8">
           <span className="text-xs font-mono uppercase tracking-widest text-sky-500 font-semibold block mb-1">
-            BESPOKE CONFIGURATION ATELIER
+            BESPOKE ATELIER
           </span>
           <h1 className="font-display text-3xl sm:text-5xl font-black tracking-tight">
-            Tailor Your Luxury Spec.
+            Tailor Your Spec.
           </h1>
         </div>
 
