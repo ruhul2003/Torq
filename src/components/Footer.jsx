@@ -20,7 +20,7 @@ export default function Footer({ onOpenReserve }) {
 
   return (
     <footer className="relative border-t border-neutral-200/80 dark:border-white/10 bg-white dark:bg-[#050608] text-neutral-800 dark:text-neutral-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-16 pb-12">
+      <div className="w-[95%] max-w-[1920px] mx-auto px-4 sm:px-6 pt-16 pb-12">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-12 pb-16 border-b border-neutral-200/80 dark:border-white/10">
           {/* Brand & Mission Statement */}
           <div className="lg:col-span-4 space-y-4">

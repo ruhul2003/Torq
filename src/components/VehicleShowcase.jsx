@@ -12,7 +12,7 @@ export default function VehicleShowcase({ onOpenReserve }) {
 
   return (
     <section id="inventory" className="py-20 relative border-t border-neutral-200/60 dark:border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-[95%] max-w-[1920px] mx-auto px-4 sm:px-6">
         {/* Section Heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
           <div>
@@ -118,7 +118,7 @@ export default function VehicleShowcase({ onOpenReserve }) {
                 {/* Color & Trim */}
                 <div className="text-xs space-y-1 text-neutral-600 dark:text-neutral-400 font-medium">
                   <div><strong className="text-neutral-900 dark:text-white">Finish:</strong> {activeModel.exterior}</div>
-                  <div><strong className="text-neutral-900 dark:text-white">Upholstery:</strong> {activeModel.interior}</div>
+                  <div><strong className="text-neutral-900 dark:text-white">Interior:</strong> {activeModel.interior}</div>
                 </div>
 
                 {/* Bullets */}
@@ -151,27 +151,21 @@ export default function VehicleShowcase({ onOpenReserve }) {
                 </div>
               </div>
 
-              {/* Right Column: Minimalist Showroom Silhouette Card */}
-              <div className="lg:col-span-6 p-8 rounded-2xl bg-neutral-100/70 dark:bg-black/50 border border-neutral-200/60 dark:border-white/5 flex flex-col items-center justify-center text-center">
-                <div className="text-[10px] font-mono uppercase tracking-widest text-neutral-400 mb-6">
-                  OFFICIAL SHOWROOM VERIFIED
-                </div>
-
-                <div className="w-full max-w-sm aspect-[16/9] border border-dashed border-neutral-300 dark:border-neutral-800 rounded-xl flex flex-col items-center justify-center p-6 bg-white/40 dark:bg-white/[0.02]">
-                  <span className="font-display font-black text-2xl sm:text-3xl text-neutral-950 dark:text-white">
-                    {activeModel.name}
-                  </span>
-                  <span className="text-xs font-mono text-sky-500 font-bold mt-1">
-                    {activeModel.price}
-                  </span>
-                  <span className="text-[10px] font-mono text-neutral-400 mt-2">
-                    VIN VERIFIED // CLEAN CERTIFICATE OF TITLE
+              {/* Right Column: Real Photorealistic Car Image */}
+              <div className="lg:col-span-6 relative aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl border border-neutral-200/80 dark:border-white/10 bg-neutral-950 group/img">
+                <img
+                  src={activeModel.image}
+                  alt={activeModel.name}
+                  className="w-full h-full object-cover object-center group-hover/img:scale-103 transition-transform duration-700"
+                />
+                <div className="absolute top-4 right-4">
+                  <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-widest uppercase bg-black/60 text-white backdrop-blur-md border border-white/20">
+                    {activeModel.specs.horsePower} • {activeModel.specs.zeroToSixty}
                   </span>
                 </div>
-
-                <div className="mt-6 flex items-center justify-between w-full max-w-sm text-xs font-mono text-neutral-500">
-                  <span>LOCATION: ATELIER 01</span>
-                  <span>GLOBAL FREIGHT READY</span>
+                <div className="absolute bottom-4 left-4 right-4 flex items-center justify-between text-[11px] font-mono text-white/90 bg-black/50 backdrop-blur-md px-3.5 py-1.5 rounded-lg border border-white/10">
+                  <span>VIN: {activeModel.vin}</span>
+                  <span className="text-emerald-400 font-semibold">WORLDWIDE FREIGHT</span>
                 </div>
               </div>
             </div>

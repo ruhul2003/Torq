@@ -74,26 +74,37 @@ export default function InventoryGallery({ onSelectVehicle }) {
               animate={{ opacity: 1, scale: 1 }}
               exit={{ opacity: 0, scale: 0.96 }}
               transition={{ duration: 0.25 }}
-              className="flex flex-col justify-between rounded-2xl border border-neutral-200/80 dark:border-white/10 bg-white dark:bg-neutral-950/70 p-6 shadow-sm hover:shadow-xl hover:border-neutral-300 dark:hover:border-white/20 transition-all group"
+              className="flex flex-col justify-between rounded-2xl border border-neutral-200/80 dark:border-white/10 bg-white dark:bg-neutral-950/70 p-4 sm:p-5 shadow-sm hover:shadow-xl hover:border-neutral-300 dark:hover:border-white/20 transition-all group"
             >
               <div>
-                {/* Header Status & Category */}
-                <div className="flex items-center justify-between gap-2 mb-3">
-                  <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase tracking-wider ${car.statusColor}`}>
-                    {car.status}
-                  </span>
-                  <span className="text-[10px] font-mono text-neutral-400 dark:text-neutral-500 uppercase">
-                    {car.categoryLabel}
-                  </span>
+                {/* Car Photo Banner */}
+                <div className="relative aspect-[16/10] overflow-hidden rounded-xl mb-4 bg-neutral-950 group/cardimg">
+                  <img
+                    src={car.image}
+                    alt={car.name}
+                    className="w-full h-full object-cover object-center group-hover/cardimg:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute top-2.5 left-2.5">
+                    <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase tracking-wider backdrop-blur-md ${car.statusColor}`}>
+                      {car.status}
+                    </span>
+                  </div>
+                  <div className="absolute top-2.5 right-2.5">
+                    <span className="px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase tracking-wider bg-black/60 text-white backdrop-blur-md border border-white/10">
+                      {car.categoryLabel}
+                    </span>
+                  </div>
                 </div>
 
                 {/* Car Name & Price */}
-                <h4 className="font-display text-xl font-bold text-neutral-950 dark:text-white tracking-tight group-hover:text-sky-500 transition-colors">
-                  {car.name}
-                </h4>
+                <div className="flex items-start justify-between gap-2 mb-1">
+                  <h4 className="font-display text-lg font-bold text-neutral-950 dark:text-white tracking-tight group-hover:text-sky-500 transition-colors">
+                    {car.name}
+                  </h4>
+                </div>
 
-                <div className="mt-2 flex items-baseline gap-2">
-                  <span className="text-2xl font-display font-black text-neutral-950 dark:text-white">
+                <div className="flex items-baseline gap-2 mb-3">
+                  <span className="text-xl sm:text-2xl font-display font-black text-neutral-950 dark:text-white">
                     {car.price}
                   </span>
                   <span className="text-[11px] text-neutral-500">
@@ -102,7 +113,7 @@ export default function InventoryGallery({ onSelectVehicle }) {
                 </div>
 
                 {/* Minimalist Specs Strip */}
-                <div className="grid grid-cols-4 gap-1.5 py-3 my-4 border-y border-neutral-100 dark:border-white/5 text-center bg-neutral-50/50 dark:bg-white/[0.01] rounded-lg">
+                <div className="grid grid-cols-4 gap-1 py-2.5 mb-3 border-y border-neutral-100 dark:border-white/5 text-center bg-neutral-50/60 dark:bg-white/[0.01] rounded-lg">
                   <div>
                     <span className="text-[9px] font-mono text-neutral-400 block">0-60</span>
                     <span className="text-xs font-bold font-display text-neutral-900 dark:text-white">{car.specs.zeroToSixty}</span>
@@ -121,31 +132,15 @@ export default function InventoryGallery({ onSelectVehicle }) {
                   </div>
                 </div>
 
-                {/* Minimal Trims & Highlights */}
-                <div className="text-[11px] text-neutral-600 dark:text-neutral-400 space-y-1 mb-4">
-                  <div className="truncate"><strong className="text-neutral-900 dark:text-white">Spec:</strong> {car.exterior}</div>
-                  <div className="truncate"><strong className="text-neutral-900 dark:text-white">Interior:</strong> {car.interior}</div>
-                </div>
-
-                {/* Bullets */}
-                <ul className="space-y-1.5 mb-4">
-                  {car.highlights.slice(0, 2).map((item, idx) => (
-                    <li key={idx} className="flex items-center gap-2 text-[11px] text-neutral-500 dark:text-neutral-400">
-                      <span className="w-1 h-1 rounded-full bg-sky-500 shrink-0" />
-                      <span className="truncate">{item}</span>
-                    </li>
-                  ))}
-                </ul>
-
-                {/* VIN & Dispatch Badge */}
-                <div className="flex items-center justify-between text-[10px] font-mono text-neutral-400 mb-3 px-2 py-1 rounded bg-neutral-100/60 dark:bg-white/[0.02]">
-                  <span>VIN: {car.vin}</span>
-                  <span className="text-emerald-600 dark:text-emerald-400 font-semibold">48H DISPATCH</span>
+                {/* Minimal Finish Info */}
+                <div className="flex items-center justify-between text-[10px] font-mono text-neutral-500 dark:text-neutral-400 mb-3 px-1">
+                  <span className="truncate">{car.exterior}</span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-semibold shrink-0">48h Delivery</span>
                 </div>
               </div>
 
               {/* Bottom Actions */}
-              <div className="pt-3 border-t border-neutral-100 dark:border-white/5 flex items-center gap-2">
+              <div className="pt-2 border-t border-neutral-100 dark:border-white/5 flex items-center gap-2">
                 <button
                   type="button"
                   onClick={() => onSelectVehicle && onSelectVehicle(car)}

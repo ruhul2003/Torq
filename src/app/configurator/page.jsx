@@ -129,7 +129,7 @@ export default function ConfiguratorPage() {
     <div className="min-h-screen bg-[#F8FAFC] dark:bg-[#060709] text-neutral-900 dark:text-white transition-colors duration-300">
       <Navbar onOpenReserve={() => setIsReserveModalOpen(true)} />
 
-      <main className="pt-28 pb-20 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <main className="pt-28 pb-20 w-[95%] max-w-[1920px] mx-auto px-4 sm:px-6">
         <div className="mb-6">
           <Link
             href="/"
@@ -153,22 +153,14 @@ export default function ConfiguratorPage() {
           {/* Left Column: Visual Customizer Preview */}
           <div className="lg:col-span-7">
             <div className="sticky top-28">
-              <div
-                className="relative rounded-3xl border border-neutral-200 dark:border-white/10 p-8 sm:p-12 shadow-xl overflow-hidden transition-all duration-500"
-                style={{
-                  background:
-                    selectedPaint.id === "ceramic"
-                      ? "linear-gradient(135deg, rgba(255,255,255,0.95), rgba(240,244,248,0.95))"
-                      : "linear-gradient(135deg, rgba(16,18,24,0.95), rgba(10,12,16,0.95))",
-                }}
-              >
-                <div className="flex items-center justify-between text-xs font-mono">
+              <div className="relative rounded-3xl border border-neutral-200 dark:border-white/10 p-6 sm:p-8 shadow-xl overflow-hidden bg-neutral-900 dark:bg-black">
+                <div className="flex items-center justify-between text-xs font-mono mb-4">
                   <div className="flex items-center gap-2">
                     <span
-                      className="w-3 h-3 rounded-full border border-white/20 shadow-sm"
+                      className="w-3.5 h-3.5 rounded-full border border-white/20 shadow-sm"
                       style={{ backgroundColor: selectedPaint.hex }}
                     />
-                    <span className="uppercase text-neutral-400">
+                    <span className="uppercase text-neutral-300 font-semibold">
                       {selectedPaint.name}
                     </span>
                   </div>
@@ -177,36 +169,20 @@ export default function ConfiguratorPage() {
                   </span>
                 </div>
 
-                <div className="py-14 sm:py-20 flex items-center justify-center relative">
-                  <svg
-                    viewBox="0 0 800 240"
-                    className="w-full max-w-xl h-auto relative z-10 transition-all duration-500"
-                    fill="none"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M80 170 C 100 120, 180 115, 250 110 C 310 105, 360 55, 470 54 C 580 52, 630 75, 680 110 C 730 120, 760 135, 780 170 Z"
-                      style={{
-                        stroke: selectedPaint.id === "ceramic" ? "#1e293b" : selectedPaint.hex,
-                        fill: selectedPaint.hex,
-                        fillOpacity: 0.15,
-                      }}
-                      strokeWidth="2.5"
-                    />
-                    <path
-                      d="M320 105 C 360 65, 430 58, 520 58 C 580 58, 620 85, 650 110 Z"
-                      stroke="#38bdf8"
-                      strokeWidth="1.5"
-                      strokeDasharray="4 2"
-                    />
-                    <circle cx="210" cy="170" r="36" stroke="#94a3b8" strokeWidth="3" />
-                    <circle cx="210" cy="170" r="14" fill="#0284c7" />
-                    <circle cx="690" cy="170" r="38" stroke="#94a3b8" strokeWidth="3" />
-                    <circle cx="690" cy="170" r="14" fill="#0284c7" />
-                  </svg>
+                {/* Real Photorealistic Vehicle Image with Subtle Reactive Tint */}
+                <div className="relative aspect-[16/9] rounded-2xl overflow-hidden bg-neutral-950 shadow-inner">
+                  <img
+                    src={`/images/cars/${selectedModel.id}.jpg`}
+                    alt={selectedModel.name}
+                    className="w-full h-full object-cover object-center transition-all duration-500"
+                  />
+                  <div
+                    className="absolute inset-0 pointer-events-none mix-blend-color opacity-25 transition-all duration-500"
+                    style={{ backgroundColor: selectedPaint.hex }}
+                  />
                 </div>
 
-                <div className="grid grid-cols-3 gap-4 pt-6 border-t border-white/10 text-center">
+                <div className="grid grid-cols-3 gap-4 pt-6 mt-4 border-t border-white/10 text-center">
                   <div>
                     <span className="text-[10px] font-mono uppercase text-neutral-400 block mb-0.5">
                       0–60 MPH

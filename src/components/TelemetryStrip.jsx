@@ -13,7 +13,7 @@ const PERKS = [
 export default function TelemetryStrip() {
   return (
     <div className="w-full border-y border-neutral-200/80 dark:border-white/10 bg-white/80 dark:bg-black/40 backdrop-blur-md py-4">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-[95%] max-w-[1920px] mx-auto px-4 sm:px-6">
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           {PERKS.map((perk, idx) => {
             const Icon = perk.icon;

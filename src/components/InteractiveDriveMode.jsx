@@ -68,7 +68,7 @@ export default function InteractiveDriveMode() {
 
   return (
     <section id="vectoring" className="py-24 relative border-t border-neutral-200/60 dark:border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-[95%] max-w-[1920px] mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
           <div>

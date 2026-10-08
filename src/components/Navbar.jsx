@@ -36,7 +36,7 @@ export default function Navbar({ onOpenReserve }) {
             : "py-5 bg-transparent"
         }`}
       >
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="w-[95%] max-w-[1920px] mx-auto px-4 sm:px-6">
           <div className="flex items-center justify-between">
             {/* Brand Logo */}
             <Link href="/" className="group flex items-center gap-2.5 focus:outline-none">

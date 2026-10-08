@@ -30,7 +30,7 @@ const REVIEWS = [
 export default function ReviewsSection() {
   return (
     <section className="py-24 relative overflow-hidden bg-neutral-50/70 dark:bg-[#07090D] border-t border-neutral-200/60 dark:border-white/5">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="w-[95%] max-w-[1920px] mx-auto px-4 sm:px-6">
         <div className="text-center max-w-2xl mx-auto mb-16">
           <span className="text-xs font-mono uppercase tracking-widest text-sky-500 font-semibold block mb-2">
             EXPERT APPRAISAL
