@@ -3,11 +3,11 @@
 import { ShieldCheck, Truck, CreditCard, Sparkles, Clock, Globe } from "lucide-react";
 
 const PERKS = [
-  { icon: Truck, title: "ENCLOSED FREIGHT", desc: "Worldwide white-glove transport" },
-  { icon: ShieldCheck, title: "ESCROW PROTECTED", desc: "Secure multi-sig & bank wire" },
-  { icon: Sparkles, title: "BESPOKE COMMISSION", desc: "Custom coachwork & interior" },
-  { icon: Clock, title: "RAPID ALLOCATION", desc: "Immediate title transfer" },
-  { icon: Globe, title: "DUTY & REGISTRATION", desc: "Global customs handling" },
+  { icon: Truck, title: "ENCLOSED FREIGHT", desc: "Covered global transport" },
+  { icon: ShieldCheck, title: "ESCROW PROTECTED", desc: "Tier-1 bank settlement" },
+  { icon: Sparkles, title: "BESPOKE ATELIER", desc: "Custom coachwork" },
+  { icon: Clock, title: "RAPID DISPATCH", desc: "Instant title assignment" },
+  { icon: Globe, title: "GLOBAL DUTIES", desc: "Full customs clearance" },
 ];
 
 export default function TelemetryStrip() {
