@@ -128,7 +128,7 @@ export default function InventoryGallery({ onSelectVehicle }) {
                 </div>
 
                 {/* Bullets */}
-                <ul className="space-y-1.5 mb-5">
+                <ul className="space-y-1.5 mb-4">
                   {car.highlights.slice(0, 2).map((item, idx) => (
                     <li key={idx} className="flex items-center gap-2 text-[11px] text-neutral-500 dark:text-neutral-400">
                       <span className="w-1 h-1 rounded-full bg-sky-500 shrink-0" />
@@ -136,6 +136,12 @@ export default function InventoryGallery({ onSelectVehicle }) {
                     </li>
                   ))}
                 </ul>
+
+                {/* VIN & Dispatch Badge */}
+                <div className="flex items-center justify-between text-[10px] font-mono text-neutral-400 mb-3 px-2 py-1 rounded bg-neutral-100/60 dark:bg-white/[0.02]">
+                  <span>VIN: {car.vin}</span>
+                  <span className="text-emerald-600 dark:text-emerald-400 font-semibold">48H DISPATCH</span>
+                </div>
               </div>
 
               {/* Bottom Actions */}
