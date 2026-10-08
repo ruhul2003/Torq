@@ -43,7 +43,52 @@ const MODELS = [
     baseHp: 1050,
     base060: "2.90s",
     baseRange: 580,
-    tag: "Expedition Platform",
+    tag: "Cyber-SUV",
+  },
+  {
+    id: "valkyrie-roadster",
+    name: "TORQ Valkyrie Roadster",
+    basePrice: 290000,
+    baseHp: 1350,
+    base060: "1.82s",
+    baseRange: 610,
+    tag: "Open Hypercar",
+  },
+  {
+    id: "celestial-lwb",
+    name: "TORQ Celestial LWB",
+    basePrice: 210000,
+    baseHp: 1100,
+    base060: "2.85s",
+    baseRange: 680,
+    tag: "Executive Saloon",
+  },
+  {
+    id: "ghost-spyder",
+    name: "TORQ Ghost Spyder",
+    basePrice: 275000,
+    baseHp: 1400,
+    base060: "1.74s",
+    baseRange: 590,
+    tag: "Barchetta",
+  },
+  {
+    id: "safari-overland",
+    name: "TORQ Safari Overland",
+    basePrice: 175000,
+    baseHp: 1000,
+    base060: "3.10s",
+    baseRange: 640,
+    tag: "Expedition 4x4",
+  },
+  {
+    id: "lemans-gte",
+    name: "TORQ Le Mans GTE",
+    basePrice: 380000,
+    baseHp: 1700,
+    base060: "1.62s",
+    baseRange: 560,
+    tag: "Homologation",
   },
 ];
 
@@ -217,9 +262,9 @@ export default function ConfiguratorPage() {
             {/* Step 1: Model */}
             <div>
               <span className="text-xs font-mono uppercase tracking-widest text-sky-500 font-semibold block mb-2.5">
-                01 // SELECT VEHICLE MODEL
+                01 // SELECT VEHICLE MODEL ({MODELS.length} AVAILABLE)
               </span>
-              <div className="space-y-2">
+              <div className="space-y-2 max-h-80 overflow-y-auto pr-1">
                 {MODELS.map((model) => {
                   const isSelected = selectedModel.id === model.id;
                   return (
