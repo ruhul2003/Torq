@@ -7,26 +7,26 @@ const SERVICES = [
   {
     icon: Truck,
     number: "01",
-    title: "White-Glove Enclosed Transport",
-    desc: "Delivered directly to your residence, villa, or private aviation hangar worldwide in temperature-controlled transport.",
+    title: "Enclosed Freight",
+    desc: "Direct delivery to your estate or private hangar worldwide.",
   },
   {
     icon: ShieldCheck,
     number: "02",
-    title: "Escrow & Digital Asset Settlement",
-    desc: "Seamless transactions via tier-1 bank wire, attorney escrow, or verified digital currency settlement.",
+    title: "Escrow Settlement",
+    desc: "Tier-1 bank wire, attorney escrow, and digital asset clearance.",
   },
   {
     icon: Sparkles,
     number: "03",
-    title: "Paint-to-Sample Coachwork",
-    desc: "Consult directly with our bespoke design team for one-off bespoke finishes, custom leather grain, and titanium badging.",
+    title: "Bespoke Coachwork",
+    desc: "Paint-to-sample livery, bespoke hides, and titanium trim.",
   },
   {
     icon: Trophy,
     number: "04",
     title: "VIP Track Handover",
-    desc: "Every purchase includes a complimentary private closed-circuit track day with a professional factory driver.",
+    desc: "Private circuit day with a factory racing instructor.",
   },
 ];
 
@@ -39,7 +39,7 @@ export default function LuxuryServices() {
             CLIENT CONCIERGE
           </span>
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-neutral-950 dark:text-white tracking-tight">
-            The Torq Purchase Experience.
+            The Torq Experience.
           </h2>
         </div>
 
