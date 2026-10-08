@@ -8,58 +8,58 @@ const DRIVE_MODES = [
   {
     id: "stealth",
     name: "STEALTH",
-    tagline: "Ultra-quiet urban cruising & maximum regenerative efficiency",
+    tagline: "Acoustic cruising and maximum range efficiency",
     icon: Compass,
     accent: "text-neutral-400 dark:text-neutral-300",
     borderActive: "border-neutral-800 dark:border-white",
     torqueBias: { front: 30, rear: 70 },
     topSpeed: "155 MPH",
     damping: "Comfort Adaptive",
-    soundProfile: "Zero dB Acoustic Glass",
+    soundProfile: "Acoustic Silence",
     efficiency: "96.4%",
     aeroWing: "0° (Retracted)",
   },
   {
     id: "gt",
     name: "GT TOURING",
-    tagline: "Balanced cross-continent endurance with intelligent road scanning",
+    tagline: "Cross-continent grand touring with active road-scan air ride",
     icon: Shield,
     accent: "text-sky-500",
     borderActive: "border-sky-500",
     torqueBias: { front: 45, rear: 55 },
     topSpeed: "185 MPH",
     damping: "Dynamic Matrix",
-    soundProfile: "Subtle Harmonic Frequency",
+    soundProfile: "Harmonic Tone",
     efficiency: "93.8%",
     aeroWing: "8° (Low Drag)",
   },
   {
     id: "apex",
     name: "APEX TRACK",
-    tagline: "Sub-millisecond yaw control & aggressive active downforce",
+    tagline: "Sub-millisecond yaw control with aggressive downforce",
     icon: Flame,
     accent: "text-amber-500",
     borderActive: "border-amber-500",
     torqueBias: { front: 20, rear: 80 },
     topSpeed: "220 MPH",
     damping: "Stiffened Magnetic Track",
-    soundProfile: "Kinetic Inverter Resonance",
+    soundProfile: "Inverter Pulse",
     efficiency: "88.2%",
     aeroWing: "26° (Max Downforce)",
   },
   {
     id: "overtorq",
     name: "OVERTORQ",
-    tagline: "Uncapped 1,450 HP launch protocol with all four motors uncensored",
+    tagline: "Uncapped 1,450+ HP full-voltage launch protocol",
     icon: Zap,
     accent: "text-cyan-400",
     borderActive: "border-cyan-400",
     torqueBias: { front: 50, rear: 50 },
     topSpeed: "235+ MPH",
     damping: "Launch Optimized",
-    soundProfile: "Full Sonic Resonance",
+    soundProfile: "Sonic Resonance",
     efficiency: "84.5%",
-    aeroWing: "Active Dynamic Airbrake",
+    aeroWing: "Active Airbrake",
   },
 ];
 
@@ -77,11 +77,11 @@ export default function InteractiveDriveMode() {
               <span>DYNAMIC KINETIC MODES</span>
             </div>
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-950 dark:text-white tracking-tight">
-              Instant Attitude Calibration.
+              Attitude Calibration.
             </h2>
           </div>
-          <p className="text-neutral-500 dark:text-neutral-400 max-w-md text-sm leading-relaxed">
-            Switch driving characteristics at 10,000 calculations per second. Air suspension, torque split, and aerodynamic trim re-vector instantly.
+          <p className="text-neutral-500 dark:text-neutral-400 max-w-sm text-sm leading-relaxed">
+            Sub-millisecond recalibration. Air suspension, torque bias, and aero profile re-vector immediately.
           </p>
         </div>
 
