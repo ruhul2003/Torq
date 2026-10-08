@@ -3,7 +3,7 @@
 import { useState, useMemo } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
-import { ArrowUpRight, Zap, Check, SlidersHorizontal, Shield, Sparkles } from "lucide-react";
+import { ArrowUpRight } from "lucide-react";
 import { INVENTORY, INVENTORY_CATEGORIES } from "@/data/inventory";
 
 export default function InventoryGallery({ onSelectVehicle }) {
@@ -18,16 +18,21 @@ export default function InventoryGallery({ onSelectVehicle }) {
     <div className="mt-14">
       {/* Category Filter Controls */}
       <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 mb-8">
-        <div>
+        <motion.div
+          initial={{ opacity: 0, y: 15 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.45, ease: [0.16, 1, 0.3, 1] }}
+        >
           <span className="text-[11px] font-mono uppercase tracking-widest text-sky-500 font-semibold block mb-1">
             SHOWROOM SALES FLEET
           </span>
           <h3 className="font-display text-2xl sm:text-3xl font-bold text-neutral-950 dark:text-white">
             Available Luxury Allocations.
           </h3>
-        </div>
+        </motion.div>
 
-        {/* Category Filter Tabs */}
+        {/* Category Filter Tabs with Framer Motion layoutId */}
         <div className="flex items-center gap-1.5 p-1 rounded-xl border border-neutral-200 dark:border-white/10 bg-neutral-100/70 dark:bg-white/[0.03] overflow-x-auto">
           {INVENTORY_CATEGORIES.map((cat) => {
             const isSelected = activeCategory === cat.id;
@@ -41,15 +46,22 @@ export default function InventoryGallery({ onSelectVehicle }) {
                 key={cat.id}
                 type="button"
                 onClick={() => setActiveCategory(cat.id)}
-                className={`px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer flex items-center gap-1.5 ${
+                className={`relative px-3 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer flex items-center gap-1.5 ${
                   isSelected
-                    ? "bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 shadow-sm"
+                    ? "text-white dark:text-neutral-950 font-bold"
                     : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
                 }`}
               >
-                <span>{cat.label}</span>
+                {isSelected && (
+                  <motion.div
+                    layoutId="activeInventoryCategoryPill"
+                    className="absolute inset-0 rounded-lg bg-neutral-950 dark:bg-white shadow-sm"
+                    transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                  />
+                )}
+                <span className="relative z-10">{cat.label}</span>
                 <span
-                  className={`text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
+                  className={`relative z-10 text-[10px] px-1.5 py-0.2 rounded-full font-mono ${
                     isSelected
                       ? "bg-white/20 text-white dark:bg-black/20 dark:text-neutral-950"
                       : "bg-neutral-200/80 dark:bg-white/10 text-neutral-500 dark:text-neutral-400"
@@ -63,26 +75,33 @@ export default function InventoryGallery({ onSelectVehicle }) {
         </div>
       </div>
 
-      {/* Luxury Vehicles Card Grid */}
+      {/* Luxury Vehicles Card Grid with Spring Stagger */}
       <motion.div layout className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <AnimatePresence>
+        <AnimatePresence mode="popLayout">
           {filteredVehicles.map((car) => (
             <motion.div
               layout
               key={car.id}
-              initial={{ opacity: 0, scale: 0.96 }}
+              initial={{ opacity: 0, scale: 0.94 }}
               animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.96 }}
-              transition={{ duration: 0.25 }}
-              className="flex flex-col justify-between rounded-2xl border border-neutral-200/80 dark:border-white/10 bg-white dark:bg-neutral-950/70 p-4 sm:p-5 shadow-sm hover:shadow-xl hover:border-neutral-300 dark:hover:border-white/20 transition-all group"
+              exit={{ opacity: 0, scale: 0.94 }}
+              whileHover={{ y: -8, transition: { duration: 0.35, ease: [0.16, 1, 0.3, 1] } }}
+              transition={{
+                duration: 0.35,
+                ease: [0.16, 1, 0.3, 1],
+                layout: { duration: 0.35, ease: [0.16, 1, 0.3, 1] },
+              }}
+              className="flex flex-col justify-between rounded-2xl border border-neutral-200/80 dark:border-white/10 bg-white dark:bg-neutral-950/70 p-4 sm:p-5 shadow-sm hover:shadow-2xl hover:border-neutral-300 dark:hover:border-white/25 transition-all group"
             >
               <div>
                 {/* Car Photo Banner */}
                 <div className="relative aspect-[16/10] overflow-hidden rounded-xl mb-4 bg-neutral-950 group/cardimg">
-                  <img
+                  <motion.img
                     src={car.image}
                     alt={car.name}
-                    className="w-full h-full object-cover object-center group-hover/cardimg:scale-105 transition-transform duration-500"
+                    whileHover={{ scale: 1.05 }}
+                    transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                    className="w-full h-full object-cover object-center"
                   />
                   <div className="absolute top-2.5 left-2.5">
                     <span className={`px-2 py-0.5 rounded text-[10px] font-mono font-semibold uppercase tracking-wider backdrop-blur-md ${car.statusColor}`}>
@@ -141,21 +160,31 @@ export default function InventoryGallery({ onSelectVehicle }) {
 
               {/* Bottom Actions */}
               <div className="pt-2 border-t border-neutral-100 dark:border-white/5 flex items-center gap-2">
-                <button
+                <motion.button
                   type="button"
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   onClick={() => onSelectVehicle && onSelectVehicle(car)}
-                  className="flex-1 py-2.5 px-3 rounded-xl bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-100 font-semibold text-[11px] tracking-wider uppercase flex items-center justify-center gap-1.5 cursor-pointer transition-all shadow-sm active:scale-98"
+                  className="flex-1 py-2.5 px-3 rounded-xl bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 hover:bg-neutral-800 dark:hover:bg-neutral-100 font-semibold text-[11px] tracking-wider uppercase flex items-center justify-center gap-1.5 cursor-pointer transition-colors shadow-sm"
                 >
                   <span>Acquire</span>
                   <ArrowUpRight className="w-3.5 h-3.5" />
-                </button>
+                </motion.button>
 
-                <Link
-                  href={`/configurator?model=${car.id}`}
-                  className="py-2.5 px-3 rounded-xl border border-neutral-200 dark:border-white/10 hover:border-neutral-900 dark:hover:border-white text-neutral-700 dark:text-neutral-300 font-semibold text-[11px] tracking-wider uppercase transition-colors"
+                <motion.div
+                  whileHover={{ scale: 1.03 }}
+                  whileTap={{ scale: 0.96 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                  className="flex-1"
                 >
-                  <span>Bespoke</span>
-                </Link>
+                  <Link
+                    href={`/configurator?model=${car.id}`}
+                    className="w-full py-2.5 px-3 rounded-xl border border-neutral-200 dark:border-white/10 hover:border-neutral-900 dark:hover:border-white text-neutral-700 dark:text-neutral-300 font-semibold text-[11px] tracking-wider uppercase transition-colors flex items-center justify-center"
+                  >
+                    <span>Bespoke</span>
+                  </Link>
+                </motion.div>
               </div>
             </motion.div>
           ))}

@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useRef, useCallback } from "react";
 import Link from "next/link";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useScroll, useTransform } from "framer-motion";
 import {
   ChevronLeft,
   ChevronRight,
@@ -11,9 +11,6 @@ import {
   Pause,
   ArrowRight,
   ArrowUpRight,
-  Zap,
-  Gauge,
-  Sparkles,
 } from "lucide-react";
 import { INVENTORY } from "@/data/inventory";
 
@@ -25,6 +22,11 @@ export default function HeroSection({ onOpenReserve }) {
   const timerRef = useRef(null);
 
   const activeCar = INVENTORY[currentIndex] || INVENTORY[0];
+
+  // Parallax on scroll for cinematic depth
+  const { scrollY } = useScroll();
+  const yParallax = useTransform(scrollY, [0, 800], [0, 180]);
+  const opacityOverlay = useTransform(scrollY, [0, 600], [1, 0.35]);
 
   const paginate = useCallback(
     (newDirection) => {
@@ -76,7 +78,7 @@ export default function HeroSection({ onOpenReserve }) {
     return Math.abs(offset) * velocity;
   };
 
-  // Slide transition variants for the background car
+  // High-quality spring transition variants for the background car
   const slideVariants = {
     enter: (dir) => ({
       x: dir > 0 ? "100%" : "-100%",
@@ -88,9 +90,9 @@ export default function HeroSection({ onOpenReserve }) {
       opacity: 1,
       scale: 1,
       transition: {
-        x: { type: "spring", stiffness: 280, damping: 32 },
+        x: { type: "spring", stiffness: 280, damping: 32, mass: 0.9 },
         opacity: { duration: 0.45 },
-        scale: { duration: 0.8, ease: [0.16, 1, 0.3, 1] },
+        scale: { duration: 0.85, ease: [0.16, 1, 0.3, 1] },
       },
     },
     exit: (dir) => ({
@@ -98,37 +100,40 @@ export default function HeroSection({ onOpenReserve }) {
       opacity: 0,
       scale: 0.95,
       transition: {
-        x: { type: "spring", stiffness: 280, damping: 32 },
+        x: { type: "spring", stiffness: 280, damping: 32, mass: 0.9 },
         opacity: { duration: 0.35 },
         scale: { duration: 0.4 },
       },
     }),
   };
 
-  // Details panel variants for stagger
+  // Stagger container for active car details
   const detailsVariants = {
-    initial: { opacity: 0, y: 24, scale: 0.98 },
+    initial: { opacity: 0, y: 20 },
     animate: {
       opacity: 1,
       y: 0,
-      scale: 1,
       transition: {
         duration: 0.45,
         ease: [0.16, 1, 0.3, 1],
-        staggerChildren: 0.08,
+        staggerChildren: 0.07,
+        delayChildren: 0.05,
       },
     },
     exit: {
       opacity: 0,
-      y: -16,
-      scale: 0.98,
+      y: -14,
       transition: { duration: 0.25, ease: "easeInOut" },
     },
   };
 
   const itemChildVariants = {
     initial: { opacity: 0, y: 12 },
-    animate: { opacity: 1, y: 0, transition: { duration: 0.35 } },
+    animate: {
+      opacity: 1,
+      y: 0,
+      transition: { duration: 0.4, ease: [0.16, 1, 0.3, 1] },
+    },
   };
 
   return (
@@ -137,8 +142,11 @@ export default function HeroSection({ onOpenReserve }) {
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
-      {/* FULL-SCREEN CAR SLIDER BACKGROUND CANVAS WITH FRAMER MOTION DRAG */}
-      <div className="absolute inset-0 w-full h-full overflow-hidden">
+      {/* FULL-SCREEN CAR SLIDER BACKGROUND CANVAS WITH PARALLAX & GESTURE DRAG */}
+      <motion.div
+        style={{ y: yParallax }}
+        className="absolute inset-0 w-full h-full overflow-hidden"
+      >
         <AnimatePresence initial={false} custom={direction} mode="wait">
           <motion.div
             key={activeCar.id}
@@ -149,7 +157,7 @@ export default function HeroSection({ onOpenReserve }) {
             exit="exit"
             drag="x"
             dragConstraints={{ left: 0, right: 0 }}
-            dragElastic={0.6}
+            dragElastic={0.5}
             onDragEnd={(e, { offset, velocity }) => {
               const swipe = swipePower(offset.x, velocity.x);
               if (swipe < -swipeConfidenceThreshold || offset.x < -80) {
@@ -160,7 +168,7 @@ export default function HeroSection({ onOpenReserve }) {
             }}
             className="absolute inset-0 w-full h-full cursor-grab active:cursor-grabbing"
           >
-            {/* Full-Screen Car Image with Ken Burns Zoom Effect */}
+            {/* Cinematic Full Screen Image with Ken Burns Zoom */}
             <motion.img
               src={activeCar.image}
               alt={activeCar.name}
@@ -171,21 +179,24 @@ export default function HeroSection({ onOpenReserve }) {
               draggable={false}
             />
 
-            {/* Cinematic Gradient Vignettes for High Contrast & Dramatic Lighting */}
+            {/* Gradient Vignettes for High Contrast & Text Legibility */}
             <div className="absolute inset-0 bg-gradient-to-t from-black/95 via-black/40 to-black/60 pointer-events-none" />
             <div className="absolute inset-0 bg-gradient-to-r from-black/75 via-transparent to-black/60 pointer-events-none" />
           </motion.div>
         </AnimatePresence>
-      </div>
+      </motion.div>
 
       {/* TOP OVERLAY: BRAND EYEBROW & ALLOCATION METRICS */}
-      <div className="relative pt-24 sm:pt-28 px-4 sm:px-8 lg:px-12 w-full max-w-[1920px] mx-auto z-20 flex items-start justify-between gap-4 pointer-events-auto">
+      <motion.div
+        style={{ opacity: opacityOverlay }}
+        className="relative pt-24 sm:pt-28 px-4 sm:px-8 lg:px-12 w-full max-w-[1920px] mx-auto z-20 flex items-start justify-between gap-4 pointer-events-auto"
+      >
         {/* Left: Brand Headline */}
         <div className="max-w-xl">
           <motion.div
             initial={{ opacity: 0, y: 12 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
             className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-white/15 bg-black/40 backdrop-blur-md mb-2 sm:mb-3 shadow-lg"
           >
             <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
@@ -197,7 +208,7 @@ export default function HeroSection({ onOpenReserve }) {
           <motion.h1
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.1 }}
+            transition={{ duration: 0.6, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
             className="font-display text-2xl sm:text-4xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight drop-shadow-lg"
           >
             CURATED HYPERCARS.
@@ -210,7 +221,7 @@ export default function HeroSection({ onOpenReserve }) {
           <motion.p
             initial={{ opacity: 0, y: 16 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.18 }}
+            transition={{ duration: 0.6, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
             className="hidden sm:block text-xs sm:text-sm text-neutral-300 font-normal leading-relaxed mt-1.5 max-w-md drop-shadow"
           >
             Handcrafted electric hypercars and exotic grand tourers. Immediate allocations worldwide.
@@ -225,7 +236,7 @@ export default function HeroSection({ onOpenReserve }) {
               initial={{ opacity: 0, y: -8 }}
               animate={{ opacity: 1, y: 0 }}
               exit={{ opacity: 0, y: 8 }}
-              transition={{ duration: 0.3 }}
+              transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="flex items-center gap-2"
             >
               <span
@@ -268,29 +279,31 @@ export default function HeroSection({ onOpenReserve }) {
             </motion.button>
           </div>
         </div>
-      </div>
+      </motion.div>
 
-      {/* FLOATING PREVIOUS / NEXT ARROWS WITH MOTION HOVER */}
+      {/* FLOATING PREVIOUS / NEXT ARROWS WITH MAGNETIC HOVER */}
       <motion.button
         type="button"
-        whileHover={{ scale: 1.15, backgroundColor: "rgba(0,0,0,0.85)" }}
+        whileHover={{ scale: 1.15, x: -4, backgroundColor: "rgba(0,0,0,0.85)" }}
         whileTap={{ scale: 0.9 }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
         onClick={() => paginate(-1)}
-        className="absolute left-3 sm:left-6 md:left-8 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-4 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white transition-colors cursor-pointer shadow-2xl group"
+        className="absolute left-3 sm:left-6 md:left-8 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-4 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white cursor-pointer shadow-2xl group"
         aria-label="Previous Car"
       >
-        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 group-hover:-translate-x-0.5 transition-transform" />
+        <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6 transition-transform group-hover:-translate-x-0.5" />
       </motion.button>
 
       <motion.button
         type="button"
-        whileHover={{ scale: 1.15, backgroundColor: "rgba(0,0,0,0.85)" }}
+        whileHover={{ scale: 1.15, x: 4, backgroundColor: "rgba(0,0,0,0.85)" }}
         whileTap={{ scale: 0.9 }}
+        transition={{ type: "spring", stiffness: 400, damping: 25 }}
         onClick={() => paginate(1)}
-        className="absolute right-3 sm:right-6 md:right-8 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-4 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white transition-colors cursor-pointer shadow-2xl group"
+        className="absolute right-3 sm:right-6 md:right-8 top-1/2 -translate-y-1/2 z-30 p-3 sm:p-4 rounded-full bg-black/40 backdrop-blur-md border border-white/20 text-white cursor-pointer shadow-2xl group"
         aria-label="Next Car"
       >
-        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 group-hover:translate-x-0.5 transition-transform" />
+        <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6 transition-transform group-hover:translate-x-0.5" />
       </motion.button>
 
       {/* BOTTOM OVERLAY: MODEL METRICS, PRICING, THUMBNAILS & CTAS WITH ANIMATED STAGGER */}
@@ -324,7 +337,7 @@ export default function HeroSection({ onOpenReserve }) {
                 {activeCar.name}
               </motion.h2>
 
-              {/* Spec Badges Grid */}
+              {/* Spec Badges Grid with Stagger */}
               <motion.div
                 variants={itemChildVariants}
                 className="grid grid-cols-2 sm:grid-cols-4 gap-2 max-w-lg"
@@ -383,17 +396,22 @@ export default function HeroSection({ onOpenReserve }) {
                   type="button"
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   onClick={() => onOpenReserve?.(activeCar)}
-                  className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white text-neutral-950 hover:bg-neutral-100 font-semibold text-xs tracking-wider uppercase cursor-pointer transition-all shadow-xl flex items-center gap-2"
+                  className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white text-neutral-950 hover:bg-neutral-100 font-semibold text-xs tracking-wider uppercase cursor-pointer transition-colors shadow-xl flex items-center gap-2"
                 >
                   <span>Acquire</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </motion.button>
 
-                <motion.div whileHover={{ scale: 1.05 }} whileTap={{ scale: 0.95 }}>
+                <motion.div
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                  transition={{ type: "spring", stiffness: 400, damping: 25 }}
+                >
                   <Link
                     href={`/configurator?model=${activeCar.id}`}
-                    className="px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 hover:border-white/50 text-white font-semibold text-xs tracking-wider uppercase transition-all flex items-center gap-1.5"
+                    className="px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 hover:border-white/50 text-white font-semibold text-xs tracking-wider uppercase transition-colors flex items-center gap-1.5"
                   >
                     <span>Bespoke</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
@@ -414,8 +432,9 @@ export default function HeroSection({ onOpenReserve }) {
                 type="button"
                 whileHover={{ y: -3, scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 onClick={() => goToSlide(idx)}
-                className={`relative overflow-hidden flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-left transition-all shrink-0 cursor-pointer backdrop-blur-md ${
+                className={`relative overflow-hidden flex items-center gap-2 px-2.5 py-1.5 rounded-xl text-left transition-colors shrink-0 cursor-pointer backdrop-blur-md ${
                   isActive
                     ? "bg-white/25 border border-white/40 text-white shadow-lg ring-1 ring-sky-400/50"
                     : "bg-black/40 border border-white/10 text-neutral-400 hover:text-white hover:bg-white/10"

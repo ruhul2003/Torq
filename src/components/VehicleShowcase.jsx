@@ -15,7 +15,12 @@ export default function VehicleShowcase({ onOpenReserve }) {
       <div className="w-[95%] max-w-[1920px] mx-auto px-4 sm:px-6">
         {/* Section Heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          >
             <div className="flex items-center gap-2 mb-2">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
               <span className="text-xs font-mono uppercase tracking-widest text-emerald-600 dark:text-emerald-400 font-semibold">
@@ -25,9 +30,9 @@ export default function VehicleShowcase({ onOpenReserve }) {
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-neutral-950 dark:text-white tracking-tight">
               Featured Fleet.
             </h2>
-          </div>
+          </motion.div>
 
-          {/* Model Switcher Tabs */}
+          {/* Model Switcher Tabs with Framer Motion layoutId */}
           <div className="flex items-center gap-1.5 p-1 rounded-xl border border-neutral-200 dark:border-white/10 bg-neutral-100/70 dark:bg-white/[0.03] overflow-x-auto">
             {INVENTORY.map((item) => {
               const isSelected = activeModel.id === item.id;
@@ -36,13 +41,20 @@ export default function VehicleShowcase({ onOpenReserve }) {
                   key={item.id}
                   type="button"
                   onClick={() => setActiveModel(item)}
-                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all cursor-pointer ${
+                  className={`relative px-3.5 py-1.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-colors cursor-pointer ${
                     isSelected
-                      ? "bg-white text-neutral-950 dark:bg-neutral-800 dark:text-white shadow-sm"
+                      ? "text-neutral-950 dark:text-white font-bold"
                       : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white"
                   }`}
                 >
-                  {item.name.replace("TORQ ", "")}
+                  {isSelected && (
+                    <motion.div
+                      layoutId="activeFeaturedModelPill"
+                      className="absolute inset-0 rounded-lg bg-white dark:bg-neutral-800 shadow-sm"
+                      transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                    />
+                  )}
+                  <span className="relative z-10">{item.name.replace("TORQ ", "")}</span>
                 </button>
               );
             })}
@@ -53,19 +65,23 @@ export default function VehicleShowcase({ onOpenReserve }) {
         <AnimatePresence mode="wait">
           <motion.div
             key={activeModel.id}
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.3 }}
+            initial={{ opacity: 0, y: 16, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -16, scale: 0.98 }}
+            transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
             className="rounded-3xl border border-neutral-200/80 dark:border-white/10 bg-white dark:bg-neutral-950/60 p-6 sm:p-10 shadow-xl backdrop-blur-md"
           >
             <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
               {/* Left Column: Price & Highlights */}
               <div className="lg:col-span-6 space-y-6">
                 <div>
-                  <span className={`inline-block px-2.5 py-0.5 rounded text-[11px] font-mono font-semibold uppercase tracking-wider mb-3 ${activeModel.statusColor}`}>
+                  <motion.span
+                    initial={{ opacity: 0, x: -10 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    className={`inline-block px-2.5 py-0.5 rounded text-[11px] font-mono font-semibold uppercase tracking-wider mb-3 ${activeModel.statusColor}`}
+                  >
                     {activeModel.status}
-                  </span>
+                  </motion.span>
                   <h3 className="font-display text-3xl sm:text-4xl font-black text-neutral-950 dark:text-white tracking-tight">
                     {activeModel.name}
                   </h3>
@@ -133,30 +149,43 @@ export default function VehicleShowcase({ onOpenReserve }) {
 
                 {/* Actions */}
                 <div className="pt-2 flex flex-wrap items-center gap-3">
-                  <button
+                  <motion.button
                     type="button"
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.96 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
                     onClick={onOpenReserve}
-                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-semibold tracking-wider uppercase bg-neutral-950 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-100 transition-all shadow-md active:scale-98 cursor-pointer"
+                    className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-semibold tracking-wider uppercase bg-neutral-950 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-100 transition-colors shadow-md active:scale-98 cursor-pointer"
                   >
                     <span>Purchase or Reserve</span>
                     <ArrowUpRight className="w-4 h-4" />
-                  </button>
+                  </motion.button>
 
-                  <Link
-                    href={`/configurator?model=${activeModel.id}`}
-                    className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-xs font-semibold tracking-wider uppercase border border-neutral-300 dark:border-white/15 hover:border-neutral-900 dark:hover:border-white text-neutral-800 dark:text-neutral-200 transition-colors"
+                  <motion.div
+                    whileHover={{ scale: 1.04 }}
+                    whileTap={{ scale: 0.96 }}
+                    transition={{ type: "spring", stiffness: 400, damping: 25 }}
                   >
-                    <span>Custom Build</span>
-                  </Link>
+                    <Link
+                      href={`/configurator?model=${activeModel.id}`}
+                      className="inline-flex items-center gap-2 px-5 py-3 rounded-full text-xs font-semibold tracking-wider uppercase border border-neutral-300 dark:border-white/15 hover:border-neutral-900 dark:hover:border-white text-neutral-800 dark:text-neutral-200 transition-colors"
+                    >
+                      <span>Custom Build</span>
+                    </Link>
+                  </motion.div>
                 </div>
               </div>
 
               {/* Right Column: Real Photorealistic Car Image */}
-              <div className="lg:col-span-6 relative aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl border border-neutral-200/80 dark:border-white/10 bg-neutral-950 group/img">
+              <motion.div
+                whileHover={{ scale: 1.015 }}
+                transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                className="lg:col-span-6 relative aspect-[16/10] rounded-2xl overflow-hidden shadow-2xl border border-neutral-200/80 dark:border-white/10 bg-neutral-950 group/img"
+              >
                 <img
                   src={activeModel.image}
                   alt={activeModel.name}
-                  className="w-full h-full object-cover object-center group-hover/img:scale-103 transition-transform duration-700"
+                  className="w-full h-full object-cover object-center group-hover/img:scale-104 transition-transform duration-700"
                 />
                 <div className="absolute top-4 right-4">
                   <span className="px-3 py-1 rounded-full text-[10px] font-mono font-bold tracking-widest uppercase bg-black/60 text-white backdrop-blur-md border border-white/20">
@@ -167,7 +196,7 @@ export default function VehicleShowcase({ onOpenReserve }) {
                   <span>VIN: {activeModel.vin}</span>
                   <span className="text-emerald-400 font-semibold">WORLDWIDE FREIGHT</span>
                 </div>
-              </div>
+              </motion.div>
             </div>
           </motion.div>
         </AnimatePresence>

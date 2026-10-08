@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Shield, Flame, Compass, Zap, Sliders, ChevronRight } from "lucide-react";
+import { Shield, Flame, Compass, Zap, Sliders } from "lucide-react";
 
 const DRIVE_MODES = [
   {
@@ -71,7 +71,12 @@ export default function InteractiveDriveMode() {
       <div className="w-[95%] max-w-[1920px] mx-auto px-4 sm:px-6">
         {/* Section Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-14 gap-6">
-          <div>
+          <motion.div
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
+          >
             <div className="inline-flex items-center gap-2 text-xs font-mono tracking-widest text-sky-500 uppercase mb-3">
               <Sliders className="w-3.5 h-3.5" />
               <span>DYNAMIC KINETIC MODES</span>
@@ -79,25 +84,34 @@ export default function InteractiveDriveMode() {
             <h2 className="font-display text-3xl sm:text-4xl lg:text-5xl font-bold text-neutral-950 dark:text-white tracking-tight">
               Attitude Calibration.
             </h2>
-          </div>
-          <p className="text-neutral-500 dark:text-neutral-400 max-w-sm text-sm leading-relaxed">
+          </motion.div>
+          <motion.p
+            initial={{ opacity: 0, y: 15 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5, delay: 0.1, ease: [0.16, 1, 0.3, 1] }}
+            className="text-neutral-500 dark:text-neutral-400 max-w-sm text-sm leading-relaxed"
+          >
             Sub-millisecond recalibration. Air suspension, torque bias, and aero profile re-vector immediately.
-          </p>
+          </motion.p>
         </div>
 
-        {/* Mode Selector Tabs */}
+        {/* Mode Selector Tabs with Framer Motion layoutId */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 mb-10">
           {DRIVE_MODES.map((mode) => {
             const isSelected = selectedMode.id === mode.id;
             const Icon = mode.icon;
             return (
-              <button
+              <motion.button
                 key={mode.id}
                 type="button"
+                whileHover={{ y: -3 }}
+                whileTap={{ scale: 0.98 }}
+                transition={{ type: "spring", stiffness: 400, damping: 25 }}
                 onClick={() => setSelectedMode(mode)}
-                className={`relative text-left p-5 rounded-xl border transition-all duration-300 cursor-pointer ${
+                className={`relative text-left p-5 rounded-xl border transition-colors cursor-pointer ${
                   isSelected
-                    ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 border-neutral-900 dark:border-white shadow-lg"
+                    ? "bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 border-neutral-900 dark:border-white shadow-xl"
                     : "bg-white/60 dark:bg-white/[0.02] border-neutral-200 dark:border-white/10 hover:border-neutral-300 dark:hover:border-white/20 text-neutral-700 dark:text-neutral-300"
                 }`}
               >
@@ -121,100 +135,123 @@ export default function InteractiveDriveMode() {
                     transition={{ type: "spring", stiffness: 450, damping: 30 }}
                   />
                 )}
-              </button>
+              </motion.button>
             );
           })}
         </div>
 
         {/* Real-time Dynamic Telemetry Box */}
-        <motion.div
-          key={selectedMode.id}
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.35 }}
-          className="rounded-2xl border border-neutral-200/80 dark:border-white/10 bg-white/70 dark:bg-white/[0.02] p-6 sm:p-8 backdrop-blur-xl"
-        >
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-            {/* Torque Split Visualizer */}
-            <div className="lg:col-span-5 space-y-6">
-              <div className="flex items-center justify-between">
-                <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500 uppercase tracking-widest">
-                  TORQUE DISTRIBUTION SPLIT
-                </span>
-                <span className="text-xs font-mono font-semibold text-neutral-900 dark:text-white">
-                  {selectedMode.torqueBias.front}% F / {selectedMode.torqueBias.rear}% R
-                </span>
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={selectedMode.id}
+            initial={{ opacity: 0, y: 15 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -15 }}
+            transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+            className="rounded-2xl border border-neutral-200/80 dark:border-white/10 bg-white/70 dark:bg-white/[0.02] p-6 sm:p-8 backdrop-blur-xl shadow-xl"
+          >
+            <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+              {/* Torque Split Visualizer */}
+              <div className="lg:col-span-5 space-y-6">
+                <div className="flex items-center justify-between">
+                  <span className="text-xs font-mono text-neutral-400 dark:text-neutral-500 uppercase tracking-widest">
+                    TORQUE DISTRIBUTION SPLIT
+                  </span>
+                  <span className="text-xs font-mono font-semibold text-neutral-900 dark:text-white">
+                    {selectedMode.torqueBias.front}% F / {selectedMode.torqueBias.rear}% R
+                  </span>
+                </div>
+
+                {/* Bias Bar with smooth Framer Motion spring physics */}
+                <div className="h-4 w-full bg-neutral-200 dark:bg-neutral-800 rounded-full overflow-hidden flex p-0.5">
+                  <motion.div
+                    initial={false}
+                    animate={{ width: `${selectedMode.torqueBias.front}%` }}
+                    transition={{ type: "spring", stiffness: 220, damping: 28 }}
+                    className="h-full bg-sky-500 rounded-l-full relative group"
+                  >
+                    <span className="absolute inset-0 flex items-center justify-center text-[9px] font-mono font-bold text-white">
+                      FRONT
+                    </span>
+                  </motion.div>
+                  <motion.div
+                    initial={false}
+                    animate={{ width: `${selectedMode.torqueBias.rear}%` }}
+                    transition={{ type: "spring", stiffness: 220, damping: 28 }}
+                    className="h-full bg-neutral-900 dark:bg-white rounded-r-full relative group"
+                  >
+                    <span className="absolute inset-0 flex items-center justify-center text-[9px] font-mono font-bold text-white dark:text-black">
+                      REAR
+                    </span>
+                  </motion.div>
+                </div>
+
+                <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
+                  Bi-directional silicon carbide gate drivers cycle at 160 kHz to vary motor torque across individual wheels without mechanical differentials or friction loss.
+                </p>
               </div>
 
-              {/* Bias Bar with smooth framer motion */}
-              <div className="h-4 w-full bg-neutral-200 dark:bg-neutral-800 rounded-full overflow-hidden flex p-0.5">
+              {/* Spec Matrix */}
+              <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-4">
                 <motion.div
-                  initial={false}
-                  animate={{ width: `${selectedMode.torqueBias.front}%` }}
-                  transition={{ type: "spring", stiffness: 200, damping: 25 }}
-                  className="h-full bg-sky-500 rounded-l-full relative group"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3 }}
+                  className="p-4 rounded-xl border border-neutral-200/60 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02]"
                 >
-                  <span className="absolute inset-0 flex items-center justify-center text-[9px] font-mono font-bold text-white">
-                    FRONT
+                  <span className="text-[10px] font-mono uppercase text-neutral-400 tracking-wider block mb-1">
+                    V-MAX CEILING
+                  </span>
+                  <span className="text-lg sm:text-xl font-display font-bold text-neutral-900 dark:text-white">
+                    {selectedMode.topSpeed}
                   </span>
                 </motion.div>
+
                 <motion.div
-                  initial={false}
-                  animate={{ width: `${selectedMode.torqueBias.rear}%` }}
-                  transition={{ type: "spring", stiffness: 200, damping: 25 }}
-                  className="h-full bg-neutral-900 dark:bg-white rounded-r-full relative group"
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: 0.05 }}
+                  className="p-4 rounded-xl border border-neutral-200/60 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02]"
                 >
-                  <span className="absolute inset-0 flex items-center justify-center text-[9px] font-mono font-bold text-white dark:text-black">
-                    REAR
+                  <span className="text-[10px] font-mono uppercase text-neutral-400 tracking-wider block mb-1">
+                    DAMPING PROFILE
+                  </span>
+                  <span className="text-sm font-semibold text-neutral-900 dark:text-white block mt-1">
+                    {selectedMode.damping}
+                  </span>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: 0.1 }}
+                  className="p-4 rounded-xl border border-neutral-200/60 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02]"
+                >
+                  <span className="text-[10px] font-mono uppercase text-neutral-400 tracking-wider block mb-1">
+                    ACTIVE AERO WING
+                  </span>
+                  <span className="text-sm font-semibold text-neutral-900 dark:text-white block mt-1">
+                    {selectedMode.aeroWing}
+                  </span>
+                </motion.div>
+
+                <motion.div
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.3, delay: 0.15 }}
+                  className="p-4 rounded-xl border border-neutral-200/60 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02]"
+                >
+                  <span className="text-[10px] font-mono uppercase text-neutral-400 tracking-wider block mb-1">
+                    THERMAL EFFICIENCY
+                  </span>
+                  <span className="text-lg sm:text-xl font-display font-bold text-emerald-600 dark:text-emerald-400">
+                    {selectedMode.efficiency}
                   </span>
                 </motion.div>
               </div>
-
-              <p className="text-xs text-neutral-500 dark:text-neutral-400 leading-relaxed">
-                Bi-directional silicon carbide gate drivers cycle at 160 kHz to vary motor torque across individual wheels without mechanical differentials or friction loss.
-              </p>
             </div>
-
-            {/* Spec Matrix */}
-            <div className="lg:col-span-7 grid grid-cols-2 sm:grid-cols-4 gap-4">
-              <div className="p-4 rounded-xl border border-neutral-200/60 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02]">
-                <span className="text-[10px] font-mono uppercase text-neutral-400 tracking-wider block mb-1">
-                  V-MAX CEILING
-                </span>
-                <span className="text-lg sm:text-xl font-display font-bold text-neutral-900 dark:text-white">
-                  {selectedMode.topSpeed}
-                </span>
-              </div>
-
-              <div className="p-4 rounded-xl border border-neutral-200/60 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02]">
-                <span className="text-[10px] font-mono uppercase text-neutral-400 tracking-wider block mb-1">
-                  DAMPING PROFILE
-                </span>
-                <span className="text-sm font-semibold text-neutral-900 dark:text-white block mt-1">
-                  {selectedMode.damping}
-                </span>
-              </div>
-
-              <div className="p-4 rounded-xl border border-neutral-200/60 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02]">
-                <span className="text-[10px] font-mono uppercase text-neutral-400 tracking-wider block mb-1">
-                  ACTIVE AERO WING
-                </span>
-                <span className="text-sm font-semibold text-neutral-900 dark:text-white block mt-1">
-                  {selectedMode.aeroWing}
-                </span>
-              </div>
-
-              <div className="p-4 rounded-xl border border-neutral-200/60 dark:border-white/5 bg-black/[0.02] dark:bg-white/[0.02]">
-                <span className="text-[10px] font-mono uppercase text-neutral-400 tracking-wider block mb-1">
-                  THERMAL EFFICIENCY
-                </span>
-                <span className="text-lg sm:text-xl font-display font-bold text-emerald-600 dark:text-emerald-400">
-                  {selectedMode.efficiency}
-                </span>
-              </div>
-            </div>
-          </div>
-        </motion.div>
+          </motion.div>
+        </AnimatePresence>
       </div>
     </section>
   );

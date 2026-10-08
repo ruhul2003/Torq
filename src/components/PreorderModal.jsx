@@ -42,26 +42,26 @@ export default function PreorderModal({ isOpen, initialModel, onClose }) {
     onClose();
   };
 
-  if (!isOpen) return null;
-
   return (
     <AnimatePresence>
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          exit={{ opacity: 0 }}
-          onClick={handleReset}
-          className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-md"
-        />
+      {isOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6 overflow-y-auto">
+          <motion.div
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.25 }}
+            onClick={handleReset}
+            className="fixed inset-0 bg-black/60 dark:bg-black/80 backdrop-blur-md"
+          />
 
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95, y: 10 }}
-          animate={{ opacity: 1, scale: 1, y: 0 }}
-          exit={{ opacity: 0, scale: 0.95, y: 10 }}
-          transition={{ duration: 0.25 }}
-          className="relative w-full max-w-lg rounded-3xl border border-neutral-200 dark:border-white/10 bg-white dark:bg-[#0B0D13] p-6 sm:p-8 shadow-2xl z-10"
-        >
+          <motion.div
+            initial={{ opacity: 0, scale: 0.92, y: 20 }}
+            animate={{ opacity: 1, scale: 1, y: 0 }}
+            exit={{ opacity: 0, scale: 0.92, y: 20 }}
+            transition={{ type: "spring", stiffness: 350, damping: 28 }}
+            className="relative w-full max-w-lg rounded-3xl border border-neutral-200 dark:border-white/10 bg-white dark:bg-[#0B0D13] p-6 sm:p-8 shadow-2xl z-10"
+          >
           <button
             type="button"
             onClick={handleReset}
@@ -89,26 +89,40 @@ export default function PreorderModal({ isOpen, initialModel, onClose }) {
                 <button
                   type="button"
                   onClick={() => setPurchaseType("deposit")}
-                  className={`py-2 text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-all ${
+                  className={`relative py-2 text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
                     purchaseType === "deposit"
-                      ? "bg-white text-neutral-900 dark:bg-neutral-800 dark:text-white shadow-sm"
+                      ? "text-neutral-900 dark:text-white font-bold"
                       : "text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
                   }`}
                 >
-                  <CreditCard className="w-3.5 h-3.5 text-sky-500" />
-                  <span>Reserve ($2,500 Escrow)</span>
+                  {purchaseType === "deposit" && (
+                    <motion.div
+                      layoutId="purchaseTypePill"
+                      className="absolute inset-0 bg-white dark:bg-neutral-800 rounded-lg shadow-sm"
+                      transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                    />
+                  )}
+                  <CreditCard className="relative z-10 w-3.5 h-3.5 text-sky-500" />
+                  <span className="relative z-10">Reserve ($2,500 Escrow)</span>
                 </button>
                 <button
                   type="button"
                   onClick={() => setPurchaseType("consult")}
-                  className={`py-2 text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-all ${
+                  className={`relative py-2 text-xs font-semibold rounded-lg flex items-center justify-center gap-1.5 transition-colors cursor-pointer ${
                     purchaseType === "consult"
-                      ? "bg-white text-neutral-900 dark:bg-neutral-800 dark:text-white shadow-sm"
+                      ? "text-neutral-900 dark:text-white font-bold"
                       : "text-neutral-500 hover:text-neutral-900 dark:hover:text-white"
                   }`}
                 >
-                  <Calendar className="w-3.5 h-3.5 text-emerald-500" />
-                  <span>Private Viewing</span>
+                  {purchaseType === "consult" && (
+                    <motion.div
+                      layoutId="purchaseTypePill"
+                      className="absolute inset-0 bg-white dark:bg-neutral-800 rounded-lg shadow-sm"
+                      transition={{ type: "spring", stiffness: 450, damping: 32 }}
+                    />
+                  )}
+                  <Calendar className="relative z-10 w-3.5 h-3.5 text-emerald-500" />
+                  <span className="relative z-10">Private Viewing</span>
                 </button>
               </div>
 
@@ -271,6 +285,7 @@ export default function PreorderModal({ isOpen, initialModel, onClose }) {
           )}
         </motion.div>
       </div>
+      )}
     </AnimatePresence>
   );
 }
