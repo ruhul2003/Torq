@@ -9,9 +9,9 @@ import ThemeToggle from "./ThemeToggle";
 
 const NAV_LINKS = [
   { name: "Inventory", href: "/#inventory" },
-  { name: "Showroom", href: "/#showroom" },
-  { name: "Bespoke Studio", href: "/configurator" },
+  { name: "Calibration", href: "/#vectoring" },
   { name: "Concierge", href: "/#concierge" },
+  { name: "Bespoke Studio", href: "/configurator" },
 ];
 
 export default function Navbar({ onOpenReserve }) {
