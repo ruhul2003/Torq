@@ -16,11 +16,14 @@ export default function VehicleShowcase({ onOpenReserve }) {
         {/* Section Heading */}
         <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
           <div>
-            <span className="text-xs font-mono uppercase tracking-widest text-sky-500 font-semibold block mb-2">
-              CURATED SHOWROOM
-            </span>
+            <div className="flex items-center gap-2 mb-2">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+              <span className="text-xs font-mono uppercase tracking-widest text-emerald-600 dark:text-emerald-400 font-semibold">
+                CURATED ATELIER // {INVENTORY.length} CARS FOR SALE
+              </span>
+            </div>
             <h2 className="font-display text-3xl sm:text-4xl font-bold text-neutral-950 dark:text-white tracking-tight">
-              Featured Luxury Inventory.
+              Featured Fleet.
             </h2>
           </div>
 
