@@ -100,19 +100,19 @@ export default function HeroSection({ onOpenReserve }) {
   };
 
   return (
-    <section className="relative pt-28 pb-14 md:pt-36 md:pb-20 overflow-hidden tech-grid min-h-[95vh] flex flex-col justify-center">
+    <section className="relative pt-24 pb-10 md:pt-28 md:pb-16 overflow-hidden tech-grid min-h-[90vh] flex flex-col justify-center">
       {/* Ambient background glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[550px] bg-sky-500/10 dark:bg-sky-500/15 rounded-full blur-[160px] pointer-events-none -z-10 animate-ambient-glow" />
 
       {/* Main Full-Width Container (Expanded to 96% / max-w-[1920px]) */}
       <div className="w-[96%] max-w-[1920px] mx-auto px-2 sm:px-4 lg:px-6 w-full flex flex-col items-center">
         {/* Eyebrow & Minimal Headline */}
-        <div className="flex flex-col items-center text-center max-w-4xl mx-auto mb-8 sm:mb-10">
+        <div className="flex flex-col items-center text-center max-w-4xl mx-auto mb-6 sm:mb-8">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4 }}
-            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-200 dark:border-white/10 bg-white/80 dark:bg-white/[0.04] backdrop-blur-md mb-4 shadow-sm"
+            className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full border border-neutral-200 dark:border-white/10 bg-white/80 dark:bg-white/[0.04] backdrop-blur-md mb-3 shadow-sm"
           >
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
             <span className="text-[11px] font-mono uppercase tracking-[0.2em] text-neutral-600 dark:text-neutral-300">
@@ -124,7 +124,7 @@ export default function HeroSection({ onOpenReserve }) {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="font-display text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight text-neutral-950 dark:text-white leading-[1.05] mb-4"
+            className="font-display text-3xl sm:text-5xl lg:text-6xl font-extrabold tracking-tight text-neutral-950 dark:text-white leading-[1.08] mb-3"
           >
             CURATED HYPERCARS.
             <br />
@@ -137,7 +137,7 @@ export default function HeroSection({ onOpenReserve }) {
             initial={{ opacity: 0, y: 14 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.2 }}
-            className="text-base sm:text-lg text-neutral-600 dark:text-neutral-300 max-w-xl mx-auto font-normal leading-relaxed mb-6"
+            className="text-sm sm:text-base text-neutral-600 dark:text-neutral-300 max-w-lg mx-auto font-normal leading-relaxed mb-5"
           >
             Handcrafted electric hypercars and exotic grand tourers. Immediate allocations worldwide.
           </motion.p>
@@ -150,7 +150,7 @@ export default function HeroSection({ onOpenReserve }) {
           >
             <a
               href="#inventory"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-semibold tracking-wider uppercase bg-neutral-950 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-100 transition-all shadow-md active:scale-98"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase bg-neutral-950 text-white hover:bg-neutral-800 dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-100 transition-all shadow-md active:scale-98"
             >
               <span>Explore Fleet</span>
               <ArrowRight className="w-3.5 h-3.5" />
@@ -159,7 +159,7 @@ export default function HeroSection({ onOpenReserve }) {
             <button
               type="button"
               onClick={() => onOpenReserve?.(activeCar)}
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-semibold tracking-wider uppercase border border-neutral-300 dark:border-white/15 hover:border-neutral-900 dark:hover:border-white text-neutral-800 dark:text-neutral-200 bg-white/70 dark:bg-white/[0.03] transition-colors cursor-pointer"
+              className="inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-xs font-semibold tracking-wider uppercase border border-neutral-300 dark:border-white/15 hover:border-neutral-900 dark:hover:border-white text-neutral-800 dark:text-neutral-200 bg-white/70 dark:bg-white/[0.03] transition-colors cursor-pointer"
             >
               <span>Acquire Vehicle</span>
             </button>
@@ -176,7 +176,7 @@ export default function HeroSection({ onOpenReserve }) {
           onMouseLeave={() => setIsHovered(false)}
         >
           {/* Main Slide Canvas */}
-          <div className="relative w-full h-[520px] sm:h-[620px] md:h-[680px] lg:h-[760px] xl:h-[820px] overflow-hidden">
+          <div className="relative w-full h-[480px] sm:h-[560px] md:h-[620px] lg:h-[680px] xl:h-[720px] overflow-hidden">
             <AnimatePresence initial={false} custom={direction} mode="wait">
               <motion.div
                 key={activeCar.id}
