@@ -46,9 +46,10 @@ export default function ReviewsSection() {
               key={idx}
               initial={{ opacity: 0, y: 15 }}
               whileInView={{ opacity: 1, y: 0 }}
+              whileHover={{ y: -6, transition: { duration: 0.25 } }}
               viewport={{ once: true }}
               transition={{ duration: 0.4, delay: idx * 0.1 }}
-              className="p-8 rounded-2xl border border-neutral-200/80 dark:border-white/10 bg-white dark:bg-neutral-950/60 flex flex-col justify-between shadow-sm hover:shadow-md transition-shadow"
+              className="p-8 rounded-2xl border border-neutral-200/80 dark:border-white/10 bg-white dark:bg-neutral-950/60 flex flex-col justify-between shadow-sm hover:shadow-xl transition-shadow cursor-default"
             >
               <div>
                 <div className="flex items-center gap-1 text-amber-500 mb-6">

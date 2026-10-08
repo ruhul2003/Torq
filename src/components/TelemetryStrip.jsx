@@ -1,5 +1,6 @@
 "use client";
 
+import { motion } from "framer-motion";
 import { ShieldCheck, Truck, CreditCard, Sparkles, Clock, Globe } from "lucide-react";
 
 const PERKS = [
@@ -18,7 +19,15 @@ export default function TelemetryStrip() {
           {PERKS.map((perk, idx) => {
             const Icon = perk.icon;
             return (
-              <div key={idx} className="flex items-center gap-3 py-1">
+              <motion.div
+                key={idx}
+                initial={{ opacity: 0, y: 15 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, margin: "-20px" }}
+                transition={{ duration: 0.4, delay: idx * 0.08 }}
+                whileHover={{ y: -2, transition: { duration: 0.2 } }}
+                className="flex items-center gap-3 py-1 cursor-default"
+              >
                 <div className="w-8 h-8 rounded-lg bg-sky-500/10 text-sky-600 dark:text-sky-400 flex items-center justify-center shrink-0">
                   <Icon className="w-4 h-4" />
                 </div>
@@ -30,7 +39,7 @@ export default function TelemetryStrip() {
                     {perk.desc}
                   </span>
                 </div>
-              </div>
+              </motion.div>
             );
           })}
         </div>
