@@ -5,21 +5,30 @@ import Navbar from "@/components/Navbar";
 import HeroSection from "@/components/HeroSection";
 import TelemetryStrip from "@/components/TelemetryStrip";
 import VehicleShowcase from "@/components/VehicleShowcase";
+import HireShowcaseSection from "@/components/HireShowcaseSection";
 import InteractiveDriveMode from "@/components/InteractiveDriveMode";
 import LuxuryServices from "@/components/LuxuryServices";
 import ReviewsSection from "@/components/ReviewsSection";
 import Footer from "@/components/Footer";
 import PreorderModal from "@/components/PreorderModal";
+import HireModal from "@/components/HireModal";
 
 export default function HomePage() {
   const [isReserveModalOpen, setIsReserveModalOpen] = useState(false);
+  const [isHireModalOpen, setIsHireModalOpen] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState(null);
+  const [selectedHireCar, setSelectedHireCar] = useState(null);
 
   const handleOpenReserve = (vehicle = null) => {
     if (vehicle) {
       setSelectedVehicle(typeof vehicle === "object" ? vehicle.id : vehicle);
     }
     setIsReserveModalOpen(true);
+  };
+
+  const handleOpenHire = (car = null) => {
+    setSelectedHireCar(car);
+    setIsHireModalOpen(true);
   };
 
   return (
@@ -32,6 +41,9 @@ export default function HomePage() {
 
       {/* Client Guarantees & White-Glove Logistics Strip */}
       <TelemetryStrip />
+
+      {/* Car Hiring Concierge Showcase */}
+      <HireShowcaseSection onOpenHire={handleOpenHire} />
 
       {/* Featured Luxury Car Inventory */}
       <VehicleShowcase onOpenReserve={handleOpenReserve} />
@@ -53,6 +65,13 @@ export default function HomePage() {
         isOpen={isReserveModalOpen}
         initialModel={selectedVehicle}
         onClose={() => setIsReserveModalOpen(false)}
+      />
+
+      {/* Car Hire Reservation Modal */}
+      <HireModal
+        isOpen={isHireModalOpen}
+        car={selectedHireCar}
+        onClose={() => setIsHireModalOpen(false)}
       />
     </div>
   );
