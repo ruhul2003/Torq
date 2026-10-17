@@ -4,13 +4,14 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowUpRight, ChevronRight } from "lucide-react";
+import { Menu, X, ArrowUpRight, ChevronRight, Key, Sparkles, UserCheck } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
 
 const NAV_LINKS = [
+  { name: "Car Hire", href: "/hire" },
+  { name: "Reservations", href: "/hire/my-bookings" },
   { name: "Inventory", href: "/#inventory" },
   { name: "Calibration", href: "/#vectoring" },
-  { name: "Concierge", href: "/#concierge" },
   { name: "Bespoke Studio", href: "/configurator" },
 ];
 
@@ -49,7 +50,7 @@ export default function Navbar({ onOpenReserve }) {
                   TORQ
                 </span>
                 <span className="text-[9px] font-mono tracking-widest text-neutral-400 dark:text-neutral-500 uppercase -mt-1">
-                  Luxury Motors
+                  Luxury Motors & Hire
                 </span>
               </div>
             </Link>
@@ -76,16 +77,21 @@ export default function Navbar({ onOpenReserve }) {
 
             {/* Actions */}
             <div className="hidden sm:flex items-center gap-3">
+              {/* Better Auth / VIP Badge */}
+              <div className="hidden xl:flex items-center gap-1.5 px-3 py-1 rounded-full border border-neutral-200/60 dark:border-white/10 bg-black/5 dark:bg-white/5 text-[11px] font-mono text-neutral-600 dark:text-neutral-300">
+                <UserCheck className="w-3.5 h-3.5 text-sky-500" />
+                <span>Concierge Client</span>
+              </div>
+
               <ThemeToggle />
 
-              <button
-                type="button"
-                onClick={onOpenReserve}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all duration-300 bg-neutral-900 hover:bg-neutral-800 text-white dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-100 shadow-sm active:scale-95"
+              <Link
+                href="/hire"
+                className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all duration-300 bg-neutral-900 hover:bg-neutral-800 text-white dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-100 shadow-sm active:scale-95"
               >
-                <span>Acquire Vehicle</span>
-                <ArrowUpRight className="w-3.5 h-3.5" />
-              </button>
+                <Key className="w-3.5 h-3.5" />
+                <span>Hire Fleet</span>
+              </Link>
             </div>
 
             {/* Mobile Actions */}
@@ -127,18 +133,15 @@ export default function Navbar({ onOpenReserve }) {
                 </Link>
               ))}
 
-              <div className="pt-3 border-t border-neutral-200 dark:border-white/10">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setMobileMenuOpen(false);
-                    if (onOpenReserve) onOpenReserve();
-                  }}
+              <div className="pt-3 border-t border-neutral-200 dark:border-white/10 flex flex-col gap-2">
+                <Link
+                  href="/hire"
+                  onClick={() => setMobileMenuOpen(false)}
                   className="w-full py-3 rounded-xl bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2"
                 >
-                  <span>Acquire Vehicle</span>
-                  <ArrowUpRight className="w-4 h-4" />
-                </button>
+                  <Key className="w-4 h-4" />
+                  <span>Explore Car Hire Fleet</span>
+                </Link>
               </div>
             </div>
           </motion.div>
