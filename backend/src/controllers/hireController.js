@@ -250,3 +250,83 @@ export async function getHireById(req, res, next) {
     next(error);
   }
 }
+
+/**
+ * Update Hire status (Admin or Concierge dispatch).
+ */
+export async function updateHireStatus(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { status, paymentStatus } = req.body;
+
+    const validStatuses = ["pending", "confirmed", "in_progress", "completed", "cancelled"];
+    if (status && !validStatuses.includes(status)) {
+      return res.status(400).json({
+        success: false,
+        error: `Invalid status '${status}'. Must be one of: ${validStatuses.join(", ")}`,
+      });
+    }
+
+    const updateFields = {};
+    if (status) updateFields.status = status;
+    if (paymentStatus) updateFields.paymentStatus = paymentStatus;
+
+    const hire = await Hire.findByIdAndUpdate(id, updateFields, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!hire) {
+      return res.status(404).json({
+        success: false,
+        error: "Hire reservation not found.",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: `Reservation ${hire.hireNumber} status transitioned to ${hire.status}.`,
+      data: hire,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Client or Concierge Cancel reservation with reason.
+ */
+export async function cancelHire(req, res, next) {
+  try {
+    const { id } = req.params;
+    const { reason = "Client requested cancellation" } = req.body;
+
+    const hire = await Hire.findById(id);
+    if (!hire) {
+      return res.status(404).json({
+        success: false,
+        error: "Hire reservation not found.",
+      });
+    }
+
+    if (hire.status === "completed") {
+      return res.status(400).json({
+        success: false,
+        error: "Completed reservations cannot be cancelled.",
+      });
+    }
+
+    hire.status = "cancelled";
+    hire.cancellationReason = reason;
+    hire.paymentStatus = "refunded";
+    await hire.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Reservation ${hire.hireNumber} has been successfully cancelled and security deposit refunded.`,
+      data: hire,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
