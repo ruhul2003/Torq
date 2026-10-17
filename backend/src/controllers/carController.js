@@ -140,3 +140,125 @@ export async function getCarDetails(req, res, next) {
     next(error);
   }
 }
+
+/**
+ * Admin: Add a new vehicle to the hiring fleet.
+ */
+export async function createCar(req, res, next) {
+  try {
+    const { name, dailyRate, category, image, specs, location, securityDeposit } = req.body;
+
+    if (!name || !dailyRate || !image) {
+      return res.status(400).json({
+        success: false,
+        error: "Vehicle name, daily hire rate, and image are required.",
+      });
+    }
+
+    const slug =
+      req.body.slug ||
+      name
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, "-")
+        .replace(/(^-|-$)/g, "");
+
+    const newCar = await Car.create({
+      ...req.body,
+      slug,
+      dailyRate: Number(dailyRate),
+      securityDeposit: securityDeposit ? Number(securityDeposit) : 3000,
+    });
+
+    res.status(201).json({
+      success: true,
+      message: "Luxury vehicle added to hiring fleet successfully.",
+      data: newCar,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Admin: Update vehicle details, pricing, or status.
+ */
+export async function updateCar(req, res, next) {
+  try {
+    const { id } = req.params;
+
+    const car = await Car.findByIdAndUpdate(id, req.body, {
+      new: true,
+      runValidators: true,
+    });
+
+    if (!car) {
+      return res.status(404).json({
+        success: false,
+        error: "Vehicle not found for update.",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Vehicle specifications and rates updated successfully.",
+      data: car,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Admin: Remove vehicle from fleet.
+ */
+export async function deleteCar(req, res, next) {
+  try {
+    const { id } = req.params;
+
+    const car = await Car.findByIdAndDelete(id);
+
+    if (!car) {
+      return res.status(404).json({
+        success: false,
+        error: "Vehicle not found for removal.",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: `Vehicle ${car.name} removed from active fleet.`,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
+
+/**
+ * Admin: Quick toggle vehicle availability status.
+ */
+export async function toggleCarAvailability(req, res, next) {
+  try {
+    const { id } = req.params;
+
+    const car = await Car.findById(id);
+    if (!car) {
+      return res.status(404).json({
+        success: false,
+        error: "Vehicle not found.",
+      });
+    }
+
+    car.isAvailable = !car.isAvailable;
+    car.maintenanceStatus = car.isAvailable ? "active" : "reserved";
+    await car.save();
+
+    res.status(200).json({
+      success: true,
+      message: `Vehicle availability set to ${car.isAvailable ? "Available" : "Unavailable"}.`,
+      isAvailable: car.isAvailable,
+      maintenanceStatus: car.maintenanceStatus,
+    });
+  } catch (error) {
+    next(error);
+  }
+}
