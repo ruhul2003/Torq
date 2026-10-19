@@ -1,21 +1,25 @@
 import Car from "../models/Car.js";
 import Hire from "../models/Hire.js";
 import Review from "../models/Review.js";
+import Part from "../models/Part.js";
 import { seedCars } from "../data/seedCars.js";
+import { seedParts } from "../data/seedParts.js";
 
 /**
- * Pre-populate database with Torq luxury cars, sample reviews, and bookings.
+ * Pre-populate database with Torq luxury cars, sample reviews, bookings, and OEM original parts.
  */
 export async function seedFleet(req, res, next) {
   try {
     const force = req.query.force === "true";
-    const existingCount = await Car.countDocuments();
+    const existingCarsCount = await Car.countDocuments();
+    const existingPartsCount = await Part.countDocuments();
 
-    if (existingCount > 0 && !force) {
+    if (existingCarsCount > 0 && existingPartsCount > 0 && !force) {
       return res.status(200).json({
         success: true,
-        message: `Database already populated with ${existingCount} vehicles. Pass ?force=true to reset.`,
-        count: existingCount,
+        message: `Database already populated with ${existingCarsCount} vehicles and ${existingPartsCount} OEM car parts. Pass ?force=true to reset.`,
+        carsCount: existingCarsCount,
+        partsCount: existingPartsCount,
       });
     }
 
@@ -23,10 +27,12 @@ export async function seedFleet(req, res, next) {
       await Car.deleteMany({});
       await Review.deleteMany({});
       await Hire.deleteMany({});
-      console.log("[Seed] Flushed existing fleet and rental records.");
+      await Part.deleteMany({});
+      console.log("[Seed] Flushed existing fleet, parts, and rental records.");
     }
 
     const insertedCars = await Car.insertMany(seedCars);
+    const insertedParts = await Part.insertMany(seedParts);
 
     // Insert rich sample reviews
     const sampleReviews = [
@@ -115,45 +121,15 @@ export async function seedFleet(req, res, next) {
         paymentStatus: "fully_paid",
         specialRequests: "Enclosed transport delivery to Upper East Side penthouse at 10:00 AM.",
       },
-      {
-        carSlug: "monolith",
-        carName: "TORQ Monolith Executive SUV",
-        carImage: "/images/cars/monolith.jpg",
-        dailyRate: 1250,
-        userEmail: "ruhul941020@gmail.com",
-        userName: "Ruhul Amin",
-        userPhone: "+1 (555) 789-0123",
-        startDate: new Date(Date.now() - 86400000 * 10),
-        endDate: new Date(Date.now() - 86400000 * 7),
-        totalDays: 3,
-        pickupLocation: "Miami Design District Pavilion, FL",
-        returnLocation: "Miami Design District Pavilion, FL",
-        deliveryOption: "airport_vip_meet",
-        chauffeurOption: { included: true, dailyFee: 450 },
-        insuranceTier: {
-          name: "Premium Shield Protection",
-          tier: "premium_shield",
-          dailyCost: 100,
-        },
-        baseRentalCost: 3750,
-        chauffeurCost: 1350,
-        insuranceCost: 300,
-        securityDeposit: 3000,
-        subtotal: 5400,
-        taxAmount: 479.25,
-        totalAmount: 5879.25,
-        status: "completed",
-        paymentStatus: "fully_paid",
-        specialRequests: "Bilingual English/French chauffeur requested for South Beach summit.",
-      },
     ];
 
     await Hire.insertMany(sampleHires);
 
     res.status(201).json({
       success: true,
-      message: `Successfully seeded ${insertedCars.length} luxury vehicles, ${sampleReviews.length} client reviews, and ${sampleHires.length} bookings.`,
+      message: `Successfully seeded ${insertedCars.length} luxury vehicles, ${insertedParts.length} OEM car parts, and sample client records.`,
       carsCount: insertedCars.length,
+      partsCount: insertedParts.length,
       reviewsCount: sampleReviews.length,
     });
   } catch (error) {
