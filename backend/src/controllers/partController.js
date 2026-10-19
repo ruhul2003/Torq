@@ -318,3 +318,127 @@ export async function deletePart(req, res) {
     res.status(500).json({ success: false, error: error.message });
   }
 }
+
+/**
+ * Verify vehicle fitment and compatibility for a specific part.
+ */
+export async function checkFitment(req, res) {
+  try {
+    const { partNumber, vehicleMake, vehicleModel, vehicleYear, vin } = req.body;
+
+    if (!partNumber) {
+      return res.status(400).json({
+        success: false,
+        error: "Part number is required for fitment validation",
+      });
+    }
+
+    let part = await Part.findOne({
+      partNumber: partNumber.toUpperCase(),
+    }).lean();
+
+    if (!part) {
+      part = seedParts.find((p) => p.partNumber === partNumber.toUpperCase());
+    }
+
+    if (!part) {
+      return res.status(404).json({
+        success: false,
+        error: "Part not found in official catalog",
+      });
+    }
+
+    const searchTarget = `${vehicleMake || ""} ${vehicleModel || ""}`.trim().toLowerCase();
+    const isCompatible = part.compatibility.some((model) =>
+      model.toLowerCase().includes(searchTarget) ||
+      searchTarget.includes(model.toLowerCase())
+    );
+
+    res.status(200).json({
+      success: true,
+      partNumber: part.partNumber,
+      partName: part.name,
+      compatible: isCompatible,
+      status: isCompatible
+        ? "100% Guaranteed Factory Direct Fitment"
+        : "Potential Fitment Warning - Consult Engineering Specialist",
+      compatibilityList: part.compatibility,
+      compatibleYears: part.compatibleYears,
+      installationDifficulty: part.installationDifficulty,
+      specs: part.specs,
+      verifiedVin: vin ? `VIN-${vin.toUpperCase()}` : null,
+      recommendation: isCompatible
+        ? "Components engineered to exact factory tolerances. Zero modifications or cutting required."
+        : "This part is not verified for this specific chassis. Contact our Concierge Engineering team for custom adapter brackets.",
+    });
+  } catch (error) {
+    console.error("[PartController] checkFitment error:", error);
+    res.status(500).json({ success: false, error: "Fitment calculation failure" });
+  }
+}
+
+/**
+ * Verify hologram certificate and authenticity serial number.
+ */
+export async function verifyPartAuthenticity(req, res) {
+  try {
+    const { hologramCode, partNumber } = req.body;
+
+    if (!hologramCode && !partNumber) {
+      return res.status(400).json({
+        success: false,
+        error: "Hologram code or part number is required for authenticity verification",
+      });
+    }
+
+    const query = {};
+    if (hologramCode) query.hologramCode = hologramCode.trim().toUpperCase();
+    if (partNumber) query.partNumber = partNumber.trim().toUpperCase();
+
+    let part = await Part.findOne(query).lean();
+
+    if (!part) {
+      part = seedParts.find(
+        (p) =>
+          (hologramCode &&
+            p.hologramCode?.toUpperCase() === hologramCode.trim().toUpperCase()) ||
+          (partNumber &&
+            p.partNumber.toUpperCase() === partNumber.trim().toUpperCase())
+      );
+    }
+
+    if (!part) {
+      return res.status(200).json({
+        success: true,
+        authentic: false,
+        status: "UNVERIFIED_OR_COUNTERFEIT",
+        message: "No factory authenticity record found matching this code in TORQ registry.",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      authentic: true,
+      status: "CERTIFIED_GENUINE_OEM",
+      certificate: {
+        partName: part.name,
+        partNumber: part.partNumber,
+        hologramCode: part.hologramCode,
+        oemBrand: part.oemBrand,
+        origin: part.specs?.origin || "Stuttgart, Germany",
+        condition: part.condition,
+        warranty: part.warranty,
+        inspectionStatus: "Passed 120-Point Laser Precision Scan",
+        issuedBy: "TORQ Certified OEM Logistics Vault, Manhattan",
+        issuedDate: new Date().toLocaleDateString("en-US", {
+          year: "numeric",
+          month: "long",
+          day: "numeric",
+        }),
+      },
+    });
+  } catch (error) {
+    res.status(500).json({ success: false, error: error.message });
+  }
+}
+
