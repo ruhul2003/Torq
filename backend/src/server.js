@@ -52,6 +52,8 @@ async function startServer() {
     console.log(` URL: http://localhost:${PORT}`);
     console.log(` Better Auth Endpoint: http://localhost:${PORT}/api/auth`);
     console.log(` Car Hire API: http://localhost:${PORT}/api/cars`);
+    console.log(` Original OEM Parts API: http://localhost:${PORT}/api/parts`);
+    console.log(` Parts Orders & Fulfillment: http://localhost:${PORT}/api/parts-orders`);
     console.log(`====================================================`);
   });
 }
