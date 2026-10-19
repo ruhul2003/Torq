@@ -4,14 +4,26 @@ import { useState, useEffect } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X, ArrowUpRight, ChevronRight, Key, Sparkles, UserCheck } from "lucide-react";
+import {
+  Menu,
+  X,
+  ArrowUpRight,
+  ChevronRight,
+  Key,
+  Sparkles,
+  UserCheck,
+  ShoppingBag,
+  Wrench,
+} from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
+import { useCart } from "@/context/CartContext";
 
 const NAV_LINKS = [
   { name: "Car Hire", href: "/hire" },
+  { name: "Original Parts", href: "/parts" },
+  { name: "Orders", href: "/parts/orders" },
   { name: "Reservations", href: "/hire/my-bookings" },
   { name: "Inventory", href: "/#inventory" },
-  { name: "Calibration", href: "/#vectoring" },
   { name: "Bespoke Studio", href: "/configurator" },
 ];
 
@@ -19,6 +31,7 @@ export default function Navbar({ onOpenReserve }) {
   const [scrolled, setScrolled] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const pathname = usePathname();
+  const { cartCount, setIsCartOpen } = useCart();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -50,20 +63,20 @@ export default function Navbar({ onOpenReserve }) {
                   TORQ
                 </span>
                 <span className="text-[9px] font-mono tracking-widest text-neutral-400 dark:text-neutral-500 uppercase -mt-1">
-                  Luxury Motors & Hire
+                  Motors • Hire • OEM Parts
                 </span>
               </div>
             </Link>
 
             {/* Desktop Navigation */}
-            <nav className="hidden md:flex items-center gap-1 lg:gap-2 px-4 py-1.5 rounded-full border border-neutral-200/80 dark:border-white/10 bg-white/70 dark:bg-white/[0.03] backdrop-blur-md">
+            <nav className="hidden md:flex items-center gap-1 lg:gap-1.5 px-3 py-1.5 rounded-full border border-neutral-200/80 dark:border-white/10 bg-white/70 dark:bg-white/[0.03] backdrop-blur-md">
               {NAV_LINKS.map((link) => {
                 const isActive = pathname === link.href;
                 return (
                   <Link
                     key={link.name}
                     href={link.href}
-                    className={`px-3.5 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-200 ${
+                    className={`px-3 py-1.5 rounded-full text-xs font-medium tracking-wide transition-all duration-200 ${
                       isActive
                         ? "text-neutral-950 dark:text-white bg-black/5 dark:bg-white/10 font-semibold"
                         : "text-neutral-600 dark:text-neutral-300 hover:text-neutral-950 dark:hover:text-white"
@@ -76,7 +89,22 @@ export default function Navbar({ onOpenReserve }) {
             </nav>
 
             {/* Actions */}
-            <div className="hidden sm:flex items-center gap-3">
+            <div className="hidden sm:flex items-center gap-2.5">
+              {/* Shopping Cart Drawer Trigger */}
+              <button
+                type="button"
+                onClick={() => setIsCartOpen(true)}
+                className="relative p-2 rounded-full border border-neutral-200/80 dark:border-white/10 hover:bg-black/5 dark:hover:bg-white/10 text-neutral-800 dark:text-neutral-200 transition-colors cursor-pointer"
+                title="View Parts Cart"
+              >
+                <ShoppingBag className="w-4 h-4" />
+                {cartCount > 0 && (
+                  <span className="absolute -top-1 -right-1 w-4 h-4 rounded-full bg-sky-500 text-white text-[9px] font-mono font-bold flex items-center justify-center">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
+
               {/* Better Auth / VIP Badge */}
               <div className="hidden xl:flex items-center gap-1.5 px-3 py-1 rounded-full border border-neutral-200/60 dark:border-white/10 bg-black/5 dark:bg-white/5 text-[11px] font-mono text-neutral-600 dark:text-neutral-300">
                 <UserCheck className="w-3.5 h-3.5 text-sky-500" />
@@ -84,6 +112,14 @@ export default function Navbar({ onOpenReserve }) {
               </div>
 
               <ThemeToggle />
+
+              <Link
+                href="/parts"
+                className="inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all duration-300 border border-neutral-300 dark:border-white/15 hover:bg-neutral-100 dark:hover:bg-white/10 text-neutral-900 dark:text-white shadow-sm"
+              >
+                <Wrench className="w-3.5 h-3.5 text-sky-500" />
+                <span>OEM Parts</span>
+              </Link>
 
               <Link
                 href="/hire"
@@ -96,6 +132,18 @@ export default function Navbar({ onOpenReserve }) {
 
             {/* Mobile Actions */}
             <div className="flex sm:hidden items-center gap-2">
+              <button
+                type="button"
+                onClick={() => setIsCartOpen(true)}
+                className="relative p-2 rounded-lg text-neutral-700 dark:text-neutral-200"
+              >
+                <ShoppingBag className="w-5 h-5" />
+                {cartCount > 0 && (
+                  <span className="absolute top-1 right-1 w-3.5 h-3.5 rounded-full bg-sky-500 text-white text-[8px] font-mono flex items-center justify-center font-bold">
+                    {cartCount}
+                  </span>
+                )}
+              </button>
               <ThemeToggle />
               <button
                 type="button"
@@ -135,9 +183,17 @@ export default function Navbar({ onOpenReserve }) {
 
               <div className="pt-3 border-t border-neutral-200 dark:border-white/10 flex flex-col gap-2">
                 <Link
+                  href="/parts"
+                  onClick={() => setMobileMenuOpen(false)}
+                  className="w-full py-2.5 rounded-xl border border-neutral-300 dark:border-white/20 text-neutral-900 dark:text-white font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+                >
+                  <Wrench className="w-4 h-4 text-sky-500" />
+                  <span>Original Car Parts Store</span>
+                </Link>
+                <Link
                   href="/hire"
                   onClick={() => setMobileMenuOpen(false)}
-                  className="w-full py-3 rounded-xl bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2"
+                  className="w-full py-2.5 rounded-xl bg-neutral-900 text-white dark:bg-white dark:text-neutral-950 font-semibold text-xs uppercase tracking-wider flex items-center justify-center gap-2"
                 >
                   <Key className="w-4 h-4" />
                   <span>Explore Car Hire Fleet</span>

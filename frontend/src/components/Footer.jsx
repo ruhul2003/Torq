@@ -47,22 +47,22 @@ export default function Footer({ onOpenReserve }) {
           {/* Nav Columns */}
           <div className="lg:col-span-2 space-y-3">
             <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-400 block">
-              FLEET MODELS
+              FLEET & HIRE
             </span>
             <ul className="space-y-2 text-xs font-medium">
               <li>
-                <Link href="/#inventory" className="hover:text-sky-500 transition-colors">
-                  TORQ Apex GT
+                <Link href="/hire" className="hover:text-sky-500 transition-colors">
+                  Luxury Car Hire Fleet
+                </Link>
+              </li>
+              <li>
+                <Link href="/hire/my-bookings" className="hover:text-sky-500 transition-colors">
+                  Hire Reservations
                 </Link>
               </li>
               <li>
                 <Link href="/#inventory" className="hover:text-sky-500 transition-colors">
-                  TORQ Stratos GT
-                </Link>
-              </li>
-              <li>
-                <Link href="/#inventory" className="hover:text-sky-500 transition-colors">
-                  TORQ Valkyrie Roadster
+                  Showroom Inventory
                 </Link>
               </li>
               <li>
@@ -75,12 +75,40 @@ export default function Footer({ onOpenReserve }) {
 
           <div className="lg:col-span-2 space-y-3">
             <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-400 block">
-              SHOWROOM
+              OEM CAR PARTS
             </span>
             <ul className="space-y-2 text-xs font-medium">
               <li>
-                <Link href="/#inventory" className="hover:text-sky-500 transition-colors">
-                  Inventory Fleet
+                <Link href="/parts" className="hover:text-sky-500 transition-colors">
+                  Original Parts Store
+                </Link>
+              </li>
+              <li>
+                <Link href="/parts/orders" className="hover:text-sky-500 transition-colors">
+                  Shipment Tracking
+                </Link>
+              </li>
+              <li>
+                <Link href="/parts" className="hover:text-sky-500 transition-colors">
+                  Braking Systems (PCCB)
+                </Link>
+              </li>
+              <li>
+                <Link href="/parts" className="hover:text-sky-500 transition-colors">
+                  Titanium Exhausts
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div className="lg:col-span-2 space-y-3">
+            <span className="text-[11px] font-mono uppercase tracking-widest text-neutral-400 block">
+              GUARANTEES
+            </span>
+            <ul className="space-y-2 text-xs font-medium">
+              <li>
+                <Link href="/parts/orders" className="hover:text-sky-500 transition-colors">
+                  Hologram Verification
                 </Link>
               </li>
               <li>
@@ -90,12 +118,7 @@ export default function Footer({ onOpenReserve }) {
               </li>
               <li>
                 <Link href="/#concierge" className="hover:text-sky-500 transition-colors">
-                  Client Concierge
-                </Link>
-              </li>
-              <li>
-                <Link href="/configurator" className="hover:text-sky-500 transition-colors">
-                  Commission Build
+                  White-Glove Logistics
                 </Link>
               </li>
             </ul>
