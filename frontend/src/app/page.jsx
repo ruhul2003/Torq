@@ -6,6 +6,7 @@ import HeroSection from "@/components/HeroSection";
 import TelemetryStrip from "@/components/TelemetryStrip";
 import VehicleShowcase from "@/components/VehicleShowcase";
 import HireShowcaseSection from "@/components/HireShowcaseSection";
+import PartsShowcaseSection from "@/components/PartsShowcaseSection";
 import InteractiveDriveMode from "@/components/InteractiveDriveMode";
 import LuxuryServices from "@/components/LuxuryServices";
 import ReviewsSection from "@/components/ReviewsSection";
@@ -44,6 +45,9 @@ export default function HomePage() {
 
       {/* Car Hiring Concierge Showcase */}
       <HireShowcaseSection onOpenHire={handleOpenHire} />
+
+      {/* Certified OEM Car Parts Showcase */}
+      <PartsShowcaseSection />
 
       {/* Featured Luxury Car Inventory */}
       <VehicleShowcase onOpenReserve={handleOpenReserve} />
