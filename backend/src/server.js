@@ -48,10 +48,10 @@ async function startServer() {
 
   app.listen(PORT, () => {
     console.log(`====================================================`);
-    console.log(`🚀 TORQ Luxury Motors Server Active`);
-    console.log(`📡 URL: http://localhost:${PORT}`);
-    console.log(`🔐 Better Auth Endpoint: http://localhost:${PORT}/api/auth`);
-    console.log(`🏎️  Car Hire API: http://localhost:${PORT}/api/cars`);
+    console.log(` TORQ Luxury Motors Server Active`);
+    console.log(` URL: http://localhost:${PORT}`);
+    console.log(` Better Auth Endpoint: http://localhost:${PORT}/api/auth`);
+    console.log(` Car Hire API: http://localhost:${PORT}/api/cars`);
     console.log(`====================================================`);
   });
 }

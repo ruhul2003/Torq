@@ -8,7 +8,8 @@
     "dev:backend": "npm run dev --prefix backend",
     "build:frontend": "npm run build --prefix frontend",
     "start:backend": "npm run start --prefix backend",
-    "seed": "node --prefix backend -e \"fetch('http://localhost:5000/api/seed?force=true').then(r=>r.json()).then(console.log)\""
+    "seed": "npm run seed --prefix backend",
+    "seed:api": "node --prefix backend -e \"fetch('http://localhost:5000/api/seed?force=true').then(r=>r.json()).then(console.log)\""
   },
   "keywords": [
     "nextjs",

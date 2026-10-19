@@ -5,13 +5,13 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
+const dbName = process.env.DB_NAME || "Torq";
 const mongoUri =
   process.env.MONGODB_URI ||
-  "mongodb+srv://torquser:torqpass123@cluster0.mongodb.net/torq_luxury?retryWrites=true&w=majority" ||
-  "mongodb://localhost:27017/torq_luxury";
+  `mongodb://localhost:27017/${dbName}`;
 
 const mongoClient = new MongoClient(mongoUri);
-const db = mongoClient.db();
+const db = mongoClient.db(dbName);
 
 export const auth = betterAuth({
   database: mongodbAdapter(db),

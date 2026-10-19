@@ -10,13 +10,14 @@ export async function connectDB() {
     return mongoose.connection;
   }
 
+  const dbName = process.env.DB_NAME || "Torq";
   const mongoUri =
     process.env.MONGODB_URI ||
-    "mongodb+srv://torquser:torqpass123@cluster0.mongodb.net/torq_luxury?retryWrites=true&w=majority" ||
-    "mongodb://localhost:27017/torq_luxury";
+    `mongodb://localhost:27017/${dbName}`;
 
   try {
     const conn = await mongoose.connect(mongoUri, {
+      dbName: dbName,
       maxPoolSize: 10,
       serverSelectionTimeoutMS: 5000,
       socketTimeoutMS: 45000,
@@ -28,7 +29,7 @@ export async function connectDB() {
 
     return conn.connection;
   } catch (error) {
-    console.error("[MongoDB] Connection failure:", error.message);
+    console.error(`[MongoDB] Connection failure to database "${dbName}":`, error.message);
     // Do not crash the entire process during offline development or mock tests
     return null;
   }

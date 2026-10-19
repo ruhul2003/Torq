@@ -116,12 +116,13 @@ const CarSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
+    collection: "cars",
   }
 );
 
 CarSchema.index({ category: 1, isAvailable: 1 });
 CarSchema.index({ dailyRate: 1 });
 
-const Car = mongoose.models.Car || mongoose.model("Car", CarSchema);
+const Car = mongoose.models.Car || mongoose.model("Car", CarSchema, "cars");
 
 export default Car;
