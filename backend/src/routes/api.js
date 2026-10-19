@@ -22,6 +22,23 @@ import {
 } from "../controllers/reviewController.js";
 import { getDashboardStats } from "../controllers/statsController.js";
 import { seedFleet } from "../controllers/seedController.js";
+import {
+  getAllParts,
+  getPartDetails,
+  getFeaturedParts,
+  getPartCategories,
+  createPart,
+  updatePart,
+  deletePart,
+  checkFitment,
+  verifyPartAuthenticity,
+} from "../controllers/partController.js";
+import {
+  createPartOrder,
+  getUserPartOrders,
+  getPartOrderById,
+  cancelPartOrder,
+} from "../controllers/partOrderController.js";
 
 const router = express.Router();
 
@@ -59,6 +76,24 @@ router.route("/hires").get(getUserHires).post(createHire);
 router.route("/hires/:id").get(getHireById);
 router.patch("/hires/:id/status", updateHireStatus);
 router.post("/hires/:id/cancel", cancelHire);
+
+/**
+ * Authentic OEM Car Parts Routes
+ */
+router.get("/parts/categories", getPartCategories);
+router.get("/parts/featured", getFeaturedParts);
+router.post("/parts/check-fitment", checkFitment);
+router.post("/parts/verify-authenticity", verifyPartAuthenticity);
+router.route("/parts").get(getAllParts).post(createPart);
+router.route("/parts/:identifier").get(getPartDetails);
+router.route("/parts/:id").put(updatePart).delete(deletePart);
+
+/**
+ * Car Part Customer Orders & Fulfillment
+ */
+router.route("/parts-orders").get(getUserPartOrders).post(createPartOrder);
+router.route("/parts-orders/:id").get(getPartOrderById);
+router.post("/parts-orders/:id/cancel", cancelPartOrder);
 
 /**
  * Reviews & Experience Feedback Routes
