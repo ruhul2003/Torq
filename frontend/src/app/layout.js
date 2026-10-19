@@ -1,14 +1,17 @@
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
+import { CartProvider } from "@/context/CartContext";
 
 export const metadata = {
-  title: "TORQ — Curated Luxury & Exotic Car Showroom",
+  title: "TORQ — Curated Luxury & Exotic Car Showroom & OEM Parts",
   description:
-    "Acquire the world's most exclusive luxury electric and exotic hypercars. Private showroom, instant bespoke configuration, and white-glove global delivery.",
+    "Acquire the world's most exclusive luxury electric and exotic hypercars and certified OEM parts. Private showroom, instant bespoke configuration, and white-glove global delivery.",
   keywords: [
     "Luxury Cars",
     "Buy Hypercar",
     "Exotic Cars For Sale",
+    "Original Car Parts",
+    "OEM Supercar Parts",
     "TORQ Motors",
     "Luxury Electric Vehicles",
     "Concierge Car Buying",
@@ -48,7 +51,9 @@ export default function RootLayout({ children }) {
       </head>
       <body className="min-h-screen bg-[#F8FAFC] text-[#090A0F] dark:bg-[#060709] dark:text-[#F8FAFC] antialiased selection:bg-neutral-900 selection:text-white dark:selection:bg-sky-400 dark:selection:text-black transition-colors duration-300">
         <ThemeProvider>
-          {children}
+          <CartProvider>
+            {children}
+          </CartProvider>
         </ThemeProvider>
       </body>
     </html>
