@@ -1,6 +1,10 @@
 import "./globals.css";
 import { ThemeProvider } from "@/context/ThemeContext";
 import { CartProvider } from "@/context/CartContext";
+import { CurrencyProvider } from "@/context/CurrencyContext";
+import { ToastProvider } from "@/context/ToastContext";
+import ScrollProgress from "@/components/ScrollProgress";
+import AmbientCursorGlow from "@/components/AmbientCursorGlow";
 
 export const metadata = {
   title: "TORQ — Curated Luxury & Exotic Car Showroom & OEM Parts",
@@ -51,9 +55,15 @@ export default function RootLayout({ children }) {
       </head>
       <body className="min-h-screen bg-[#F8FAFC] text-[#090A0F] dark:bg-[#060709] dark:text-[#F8FAFC] antialiased selection:bg-neutral-900 selection:text-white dark:selection:bg-sky-400 dark:selection:text-black transition-colors duration-300">
         <ThemeProvider>
-          <CartProvider>
-            {children}
-          </CartProvider>
+          <CurrencyProvider>
+            <CartProvider>
+              <ToastProvider>
+                <ScrollProgress />
+                <AmbientCursorGlow />
+                {children}
+              </ToastProvider>
+            </CartProvider>
+          </CurrencyProvider>
         </ThemeProvider>
       </body>
     </html>

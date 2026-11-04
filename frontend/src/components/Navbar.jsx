@@ -16,6 +16,7 @@ import {
   Wrench,
 } from "lucide-react";
 import ThemeToggle from "./ThemeToggle";
+import CurrencySelector from "./CurrencySelector";
 import { useCart } from "@/context/CartContext";
 
 const NAV_LINKS = [
@@ -111,6 +112,7 @@ export default function Navbar({ onOpenReserve }) {
                 <span>Concierge Client</span>
               </div>
 
+              <CurrencySelector />
               <ThemeToggle />
 
               <Link
@@ -144,6 +146,7 @@ export default function Navbar({ onOpenReserve }) {
                   </span>
                 )}
               </button>
+              <CurrencySelector />
               <ThemeToggle />
               <button
                 type="button"
