@@ -35,7 +35,7 @@ export default function Footer({ onOpenReserve }) {
             </Link>
 
             <p className="text-xs sm:text-sm text-neutral-500 dark:text-neutral-400 leading-relaxed max-w-sm">
-              Curated electric hypercars, sub-millisecond torque vectoring, and private showroom allocations.
+              Curated electric hypercars, private showroom access, and white-glove delivery for collectors and drivers.
             </p>
 
             <div className="flex items-center gap-2 text-[11px] font-mono text-emerald-600 dark:text-emerald-400">
@@ -173,7 +173,7 @@ export default function Footer({ onOpenReserve }) {
               onClick={onOpenReserve}
               className="text-sky-600 dark:text-sky-400 hover:underline cursor-pointer font-medium"
             >
-              Acquire Vehicle
+              Book a Private Viewing
             </button>
             <span className="text-neutral-300 dark:text-neutral-800">|</span>
             <a href="#inventory" className="hover:text-neutral-900 dark:hover:text-white transition-colors">

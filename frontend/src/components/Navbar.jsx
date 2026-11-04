@@ -63,7 +63,7 @@ export default function Navbar({ onOpenReserve }) {
                   TORQ
                 </span>
                 <span className="text-[9px] font-mono tracking-widest text-neutral-400 dark:text-neutral-500 uppercase -mt-1">
-                  Motors • Hire • OEM Parts
+                  Luxury Motors • Hire • Parts
                 </span>
               </div>
             </Link>
@@ -126,7 +126,7 @@ export default function Navbar({ onOpenReserve }) {
                 className="inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-xs font-semibold tracking-wider uppercase cursor-pointer transition-all duration-300 bg-neutral-900 hover:bg-neutral-800 text-white dark:bg-white dark:text-neutral-950 dark:hover:bg-neutral-100 shadow-sm active:scale-95"
               >
                 <Key className="w-3.5 h-3.5" />
-                <span>Hire Fleet</span>
+                <span>Private Hire</span>
               </Link>
             </div>
 

@@ -39,7 +39,7 @@ export default function LuxuryServices() {
             CLIENT CONCIERGE
           </span>
           <h2 className="font-display text-3xl sm:text-4xl font-bold text-neutral-950 dark:text-white tracking-tight">
-            The Torq Experience.
+            Private Client Experience.
           </h2>
         </div>
 

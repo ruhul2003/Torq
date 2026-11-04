@@ -55,10 +55,10 @@ export default function HireShowcaseSection({ onOpenHire }) {
               <span>TORQ Bespoke Hire Division</span>
             </div>
             <h2 className="text-3xl sm:text-4xl lg:text-5xl font-display font-bold tracking-tight text-neutral-950 dark:text-white">
-              Experience the Drive. Without Commitment.
+              Drive the Extraordinary.
             </h2>
             <p className="mt-2 text-sm sm:text-base text-neutral-600 dark:text-neutral-400 max-w-xl">
-              Immerse yourself in precision automotive royalty. From weekend coastal getaways to red-carpet chauffeured arrivals.
+              Precision automotive royalty for weekends away, VIP arrivals, and unforgettable coastal escapes.
             </p>
           </div>
 
@@ -66,7 +66,7 @@ export default function HireShowcaseSection({ onOpenHire }) {
             href="/hire"
             className="inline-flex items-center gap-2 px-6 py-3 rounded-full text-xs font-bold uppercase tracking-wider bg-neutral-900 text-white dark:bg-white dark:text-black hover:scale-105 transition-all shadow-md group shrink-0"
           >
-            <span>Browse Full Hire Fleet</span>
+            <span>Reserve Your Drive</span>
             <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
           </Link>
         </div>
