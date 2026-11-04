@@ -214,7 +214,7 @@ export default function HeroSection({ onOpenReserve }) {
             CURATED HYPERCARS.
             <br />
             <span className="bg-gradient-to-r from-white via-neutral-200 to-neutral-400 bg-clip-text text-transparent">
-              IMMEDIATE DELIVERY.
+              DRIVEN WITH DISTINCTION.
             </span>
           </motion.h1>
 
@@ -224,7 +224,7 @@ export default function HeroSection({ onOpenReserve }) {
             transition={{ duration: 0.6, delay: 0.18, ease: [0.16, 1, 0.3, 1] }}
             className="hidden sm:block text-xs sm:text-sm text-neutral-300 font-normal leading-relaxed mt-1.5 max-w-md drop-shadow"
           >
-            Handcrafted electric hypercars and exotic grand tourers. Immediate allocations worldwide.
+            Handcrafted electric hypercars and exotic grand tourers, delivered with concierge-level service worldwide.
           </motion.p>
         </div>
 
@@ -400,7 +400,7 @@ export default function HeroSection({ onOpenReserve }) {
                   onClick={() => onOpenReserve?.(activeCar)}
                   className="px-5 sm:px-6 py-2.5 sm:py-3 rounded-full bg-white text-neutral-950 hover:bg-neutral-100 font-semibold text-xs tracking-wider uppercase cursor-pointer transition-colors shadow-xl flex items-center gap-2"
                 >
-                  <span>Acquire</span>
+                  <span>Reserve</span>
                   <ArrowRight className="w-3.5 h-3.5" />
                 </motion.button>
 
@@ -413,7 +413,7 @@ export default function HeroSection({ onOpenReserve }) {
                     href={`/configurator?model=${activeCar.id}`}
                     className="px-4 sm:px-5 py-2.5 sm:py-3 rounded-full bg-black/60 hover:bg-black/90 backdrop-blur-md border border-white/20 hover:border-white/50 text-white font-semibold text-xs tracking-wider uppercase transition-colors flex items-center gap-1.5"
                   >
-                    <span>Bespoke</span>
+                    <span>Customize</span>
                     <ArrowUpRight className="w-3.5 h-3.5" />
                   </Link>
                 </motion.div>
